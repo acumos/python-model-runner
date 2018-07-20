@@ -1,0 +1,48 @@
+---
+project: 'python-model-runner'
+project_creation_date: '2018-07-19'
+project_category: ''
+lifecycle_state: 'Incubation'
+project_lead: &acumos_python-model-runner_ptl
+    name: 'Guy Jacobson'
+    email: 'guy@research.att.com'
+    id: 'guyjacobson'
+    company: 'AT&T Labs-Research'
+    timezone: 'America/New_York'
+primary_contact: *acumos_python-model-runner_ptl
+issue_tracking:
+    type: 'jira'
+    url: 'https://jira.acumos.org/projects/ACUMOS'
+    key: 'ACUMOS'
+mailing_list:
+    type: 'groups.io'
+    url: 'https://lists.acumos.org'
+    tag: '<[sub-project_name]>'
+realtime_discussion:
+    type: 'irc'
+    server: 'freenode.net'
+    channel: '#acumos'
+meetings:
+    - type: 'zoom'
+      agenda: ''
+      url: ''
+      server: 'n/a'
+      channel: 'n/a'
+      repeats: 'weekly'
+      time: ''
+repositories:
+    - 'python-model-runner'
+committers:
+    - <<: *acumos_python-model-runner
+    - name: 'Paul Triantafyllou'
+      email: 'trianta@research.att.com'
+      company: 'ATT'
+      id: 'trianta'
+      timezone: 'America/New_York'
+    - name: 'Eric Z'
+      email: 'ezavesky@research.att.com'
+      company: 'ATT'
+      id: 'ezsomething'
+      timezone: 'America/Chicago'
+tsc:
+    approval: 'https://lists.acumos.org/g/tscgeneral'
