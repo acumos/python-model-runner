@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbfa88c6_86a90479",
+        "filename": "tox.ini",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-07-30T13:51:42Z",
+      "side": 1,
+      "message": "Excellent choice of seed ;)",
+      "range": {
+        "startLine": 7,
+        "startChar": 18,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}
