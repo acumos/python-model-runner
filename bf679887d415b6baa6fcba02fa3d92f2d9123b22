@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "268924eb_62f27f19",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-08-08T21:41:31Z",
+      "side": 1,
+      "message": "This was originally how I had it, but I questioned its usefulness and combined it into a single CLI-level function. If you believe this is a useful feature then I can add a public API in this module for running the model.\n\nEdit 2:\nAfter seeing the comments on runner_helper.py, this makes more sense. The ModelRunner class in there was just for testing.",
+      "parentUuid": "1574db11_4f772188",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bb2caa7_3f909236",
         "filename": "acumos_model_runner/runner.py",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ddef203c_efa479a5",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-08-08T21:41:31Z",
+      "side": 1,
+      "message": "I believe so, because the `load_model` function must first unzip the model.zip artifact, which would require write permissions in `model_dir`",
+      "parentUuid": "4bb2caa7_3f909236",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19067a6a_59552e6b",
         "filename": "acumos_model_runner/tests/runner_helper.py",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2018-08-08T20:43:37Z",
       "side": 1,
       "message": "Consider adding CORS friendly headers (\"Access-Control-Allow-Origin\") to allow generic use of runner",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "109fb960_fe430da2",
+        "filename": "acumos_model_runner/tests/runner_helper.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-08-08T21:41:31Z",
+      "side": 1,
+      "message": "I\u0027m not sure that I follow the comments on this module. This module is only intended to be used in unit tests, so CORS concerns and localhost shouldn\u0027t be a problem.",
+      "parentUuid": "19067a6a_59552e6b",
       "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "0f1ba61b_79be106b",
+        "filename": "acumos_model_runner/tests/runner_helper.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-08-08T21:41:31Z",
+      "side": 1,
+      "message": "It\u0027s localhost because this is for testing. HTTP is the only scheme that\u0027s supported currently.",
+      "parentUuid": "08f35a39_9449de1f",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "031ef7d2_802c6c51",
         "filename": "acumos_model_runner/tests/test_runner.py",
         "patchSetId": 3
@@ -98,6 +170,24 @@
       "writtenOn": "2018-08-08T20:43:37Z",
       "side": 1,
       "message": "Possible to add cascade/forward test?",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1510135e_fa3437f9",
+        "filename": "acumos_model_runner/tests/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-08-08T21:41:31Z",
+      "side": 1,
+      "message": "I wrote about this in another comment, but the cascade/forward functionality was removed from the model runner",
+      "parentUuid": "031ef7d2_802c6c51",
       "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "d505f01b_0e109279",
+        "filename": "docs/tutorial/index.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-08-08T21:41:31Z",
+      "side": 1,
+      "message": "The issue is that I want the long description on the PyPI website to render correctly, so I\u0027ll need the images hosted somewhere. Once this PR is merged, I\u0027m hoping that these raw image URLs will work as intended. But until the first merge, yes the docs won\u0027t render correctly.",
+      "parentUuid": "e5ea8af9_243c0b33",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22e7b281_ec3a15f7",
         "filename": "setup.py",
         "patchSetId": 3
@@ -132,6 +240,24 @@
       "writtenOn": "2018-08-08T20:43:37Z",
       "side": 1,
       "message": "Should we convert to underscore instead of dash, to match dcae runner?\nhttps://github.com/acumos/python-dcae-model-runner/blob/master/setup.py#L50",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df020f07_3d2bfddd",
+        "filename": "setup.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-08-08T21:41:31Z",
+      "side": 1,
+      "message": "Yes, good catch",
+      "parentUuid": "22e7b281_ec3a15f7",
       "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true

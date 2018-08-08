@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2ec98815_27e707f4",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-08-08T21:41:31Z",
+      "side": 0,
+      "message": "I\u0027m not sure that I follow here. If a single worker is ready to proceed, why would we artificially delay loading the server?",
+      "parentUuid": "a9f793be_13eb6469",
+      "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4d1e2ee_5ced40b7",
         "filename": "acumos_model_runner/runner.py",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6187d8f8_a1803815",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-08-08T21:41:31Z",
+      "side": 0,
+      "message": "I removed forwarding because it was an overly-complex feature that seemed to be trying to compensate for a lack of Acumos runtime. IMO the same functionality can be achieved more generally in a sidecar microservice that interacts with a broker or another downstream node on behalf of the model runner. The added benefit is that a single forwarder implementation can be reused for any model runner implementation that conforms to the (simpler) API. This was discussed in the new model runner API proposal doc.",
+      "parentUuid": "e4d1e2ee_5ced40b7",
+      "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2eae965e_376ef531",
         "filename": "acumos_model_runner/runner.py",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2018-08-08T20:43:37Z",
       "side": 0,
       "message": "It was nice to have \u0027main\u0027 for local testing.",
+      "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5906dc6d_b55b4549",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-08-08T21:41:31Z",
+      "side": 0,
+      "message": "Lol perhaps, but this is a module in a library that\u0027s not intended to be executed directly, so it got axed. You can still import the desired object in a unit test and execute that.",
+      "parentUuid": "2eae965e_376ef531",
       "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
