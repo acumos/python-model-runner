@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+message MessageA {
+  string x = 1;
+  int32 y = 2;
+}
+
+message MessageB {
+  repeated string texts = 1;
+  map<string, int32> counter = 2;
+}
+
+message Outer {
+  message Inner {
+    int32 x = 1;
+  }
+  Inner inner = 1;
+}
+
+enum EnumA {
+	x = 0;
+	y = 1;
+	z = 2;
+}
