@@ -1,0 +1,71 @@
+{
+  "EnumA": {
+    "enum": [
+      "x",
+      "y",
+      "z"
+    ],
+    "type": "string"
+  },
+  "MessageA": {
+    "properties": {
+      "x": {
+        "type": "string"
+      },
+      "y": {
+        "format": "int32",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "x",
+      "y"
+    ],
+    "type": "object"
+  },
+  "MessageB": {
+    "properties": {
+      "counter": {
+        "additionalProperties": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "type": "object"
+      },
+      "texts": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "counter",
+      "texts"
+    ],
+    "type": "object"
+  },
+  "Outer": {
+    "properties": {
+      "inner": {
+        "$ref": "#/definitions/Outer.Inner"
+      }
+    },
+    "required": [
+      "inner"
+    ],
+    "type": "object"
+  },
+  "Outer.Inner": {
+    "properties": {
+      "x": {
+        "format": "int32",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "x"
+    ],
+    "type": "object"
+  }
+}

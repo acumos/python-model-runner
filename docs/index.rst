@@ -16,17 +16,17 @@
 .. limitations under the License.
 .. ===============LICENSE_END=========================================================
 
-.. Acumos Python Model Runner documentation master
-
-===================
-Python Model Runner
-===================
-
+==========================
+Acumos Python Model Runner
+==========================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   release-notes.rst
+   release-notes
+   user-guide
+   tutorial/index
+   developer-guide
 
 * :ref:`search`
