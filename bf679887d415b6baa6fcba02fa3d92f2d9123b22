@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1574db11_4f772188",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-08T20:43:37Z",
+      "side": 1,
+      "message": "This is a potential loss of functionality.  There was a desire to allow users to run via the model runner but by using it as a library instead of always as an executable.  With a no-input run_app function, there is no middle ground by which they can specify a configuration.\n\nIt wasn\u0027t clear whether the class \u0027ModelRunner\u0027 would be a sufficient mapping for this need.",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb2caa7_3f909236",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-08T20:43:37Z",
+      "side": 1,
+      "message": "Is a writeable path a safe assumption?",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19067a6a_59552e6b",
+        "filename": "acumos_model_runner/tests/runner_helper.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-08T20:43:37Z",
+      "side": 1,
+      "message": "Consider adding CORS friendly headers (\"Access-Control-Allow-Origin\") to allow generic use of runner",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d575b213_cf1ac474",
+        "filename": "acumos_model_runner/tests/runner_helper.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-08T20:43:37Z",
+      "side": 1,
+      "message": "Think of the CORS",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08f35a39_9449de1f",
+        "filename": "acumos_model_runner/tests/runner_helper.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-08T20:43:37Z",
+      "side": 1,
+      "message": "Is localhost a safe port to assume? What about http? Will there be CORS issues when talking to other services?",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "031ef7d2_802c6c51",
+        "filename": "acumos_model_runner/tests/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-08T20:43:37Z",
+      "side": 1,
+      "message": "Possible to add cascade/forward test?",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ea8af9_243c0b33",
+        "filename": "docs/tutorial/index.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-08T20:43:37Z",
+      "side": 1,
+      "message": "In test documentation it looks like these images didn\u0027t render correctly.  You can relative link them instead of using the full path. \n\n(now: https://logs.acumos.org/production/vex-yul-acumos-jenkins-1/documentation-rtd-verify-master/1056/html/submodules/python-model-runner/docs/tutorial/index.html)\n(ex of rel link: https://docs.acumos.org/en/latest/submodules/image-classification/docs/tutorials/demonstration.html#example-image-classification-demo-docker-and-protobuf)",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22e7b281_ec3a15f7",
+        "filename": "setup.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-08T20:43:37Z",
+      "side": 1,
+      "message": "Should we convert to underscore instead of dash, to match dcae runner?\nhttps://github.com/acumos/python-dcae-model-runner/blob/master/setup.py#L50",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    }
+  ]
+}

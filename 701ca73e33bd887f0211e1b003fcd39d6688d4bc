@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9f793be_13eb6469",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-08T20:43:37Z",
+      "side": 0,
+      "message": "Believe a wait period (make sure all models loaded) was necessary for some bigger loads (e.g. image classifier).  It blocks subsequent action until all processes are spun up.  Unless this is nested somewhere, it\u0027s a loss of functionality.",
+      "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d1e2ee_5ced40b7",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-08T20:43:37Z",
+      "side": 0,
+      "message": "Not sure forwarding loss is acceptable.  Has it been moved elsewhere?",
+      "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eae965e_376ef531",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-08T20:43:37Z",
+      "side": 0,
+      "message": "It was nice to have \u0027main\u0027 for local testing.",
+      "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    }
+  ]
+}
