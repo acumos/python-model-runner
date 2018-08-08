@@ -31,7 +31,7 @@ with open(path_join(SETUP_DIR, 'acumos_model_runner', '_version.py')) as file:
 
 def _long_descr():
     '''Yields the content of documentation files for the long description'''
-    for file in ('user-guide.rst', 'developer-guide.rst', 'release-notes.rst'):
+    for file in ('user-guide.rst', path_join('tutorial', 'index.rst'), 'release-notes.rst', 'developer-guide.rst'):
         doc_path = path_join(DOCS_DIR, file)
         with open(doc_path) as f:
             yield f.read()
@@ -53,16 +53,23 @@ setup(
     description='Acumos model runner for Python models',
     entry_points="""
     [console_scripts]
-    acumos-model-runner=acumos_model_runner.runner:run
+    acumos_model_runner=acumos_model_runner.runner:run_app_cli
     """,
-    install_requires=['acumos>=0.7',
-                      'Flask',
-                      'gunicorn'],
+    install_requires=['acumos>=0.5.3',
+                      'lark-parser',
+                      'connexion',
+                      'gunicorn',
+                      'pyyaml',
+                      'jinja2',
+                      'protobuf',
+                      'flask-cors'],
     keywords='acumos machine learning model runner server protobuf ml ai',
     license='Apache License 2.0',
     long_description='\n'.join(_long_descr()),
-    name='acumos-model-runner',
+    name='acumos_model_runner',
     packages=find_packages(),
+    package_data={'acumos_model_runner': [path_join('data', 'proto3.ebnf'),
+                                          path_join('data', 'templates', '*.yaml')]},
     python_requires='>=3.4',
     url='https://gerrit.acumos.org/r/gitweb?p=python-model-runner.git',
     version=__version__,

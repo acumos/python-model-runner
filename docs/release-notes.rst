@@ -16,11 +16,17 @@
 .. limitations under the License.
 .. ===============LICENSE_END==============================================================
 
-=================================
-Python Model Runner Release Notes
-=================================
+========================================
+Acumos Python Model Runner Release Notes
+========================================
 
+v0.2.0
+======
+- Overhaul of model runner API
+- Added support for ``application/json`` via ``Content-Type`` and ``Accept`` headers
+- Added automatic generation of `OpenAPI Specification <https://swagger.io/docs/specification/2-0/basic-structure/>`__ and `Swagger UI <https://swagger.io/>`__
+- Added support for CORS
 
 v0.1.0
 ======
-- initial project split from ``acumos`` python package
+- Model runner implementation split off from `Acumos Python client <https://pypi.org/project/acumos/>`__ project

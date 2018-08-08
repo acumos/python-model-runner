@@ -16,41 +16,23 @@
 .. limitations under the License.
 .. ===============LICENSE_END=========================================================
 
-==========================================
-Acumos Python Model Runner Developer Guide
-==========================================
+===================================
+Acumos Python Model Runner Examples
+===================================
 
-Testing
-=======
+This directory provides example scripts that demonstrate how to use the model runner.
 
-We use a combination of ``tox``, ``pytest``, and ``flake8`` to test
-``acumos_model_runner``. Code which is not PEP8 compliant (aside from E501) will be
-considered a failing test. You can use tools like ``autopep8`` to
-“clean” your code as follows:
+example_model.py
+================
 
-.. code:: bash
-
-    $ pip install autopep8
-    $ cd python-model-runner
-    $ autopep8 -r --in-place --ignore E501 acumos_model_runner/ testing/ examples/
-
-Run tox directly:
+Invoking this script creates an Acumos model and saves it to a directory ``example-model``. This model can then be used with the model runner.
 
 .. code:: bash
 
-    $ cd python-model-runner
-    $ tox
+    $ python example_model.py
+    $ acumos_model_runner example-model/
 
-You can also specify certain tox environments to test:
+chain_models.py
+===============
 
-.. code:: bash
-
-    $ tox -e py34  # only test against Python 3.4
-    $ tox -e flake8  # only lint code
-
-And finally, you can run pytest directly in your environment *(recommended starting place)*:
-
-.. code:: bash
-
-    $ pytest
-    $ pytest -s   # verbose output
+This script shows how one can combine multiple Acumos models in a chain of operations.

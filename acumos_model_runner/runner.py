@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # ===============LICENSE_START=======================================================
 # Acumos Apache-2.0
 # ===================================================================================
@@ -16,99 +16,83 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ===============LICENSE_END=========================================================
-# -*- coding: utf-8 -*-
 '''
-Provides a model runner application that subscribes to iris DataFrame messages and publishes Prediction messages
+Provides a model runner based on a connexion application and gunicorn server
 '''
-import argparse
 import json
+import argparse
 from functools import partial
-from os import path
-import sys
-
-import requests
-from flask import Flask, request, make_response
-from google.protobuf import json_format
+from os.path import join as path_join
 
 from gunicorn.app.base import BaseApplication
-from multiprocessing import Event
-from multiprocessing.sharedctypes import Value
-
+from connexion import App
+from connexion.resolver import Resolver
+from flask import redirect
+from flask_cors import CORS
 from acumos.wrapped import load_model
-import logging
+
+from acumos_model_runner.api import methods
+from acumos_model_runner.oas_gen import create_oas
 
 
-def invoke_method(model_method, downstream, app):
-    '''Consumes and produces protobuf binary data'''
-    logger = app.logger_ext
-    content_type = "text/plain;charset=UTF-8"
-    bytes_in = request.data
-    if not bytes_in:
-        if request.form:
-            bytes_in = dict(request.form)
-        elif request.args:
-            bytes_in = dict(request.args)
-    if type(bytes_in) == dict:  # attempt to push arguments into JSON for more tolerant parsing
-        bytes_in = json.dumps(bytes_in)
-    bytes_out = None
+def run_app_cli():
+    '''CLI entry point for starting the model runner'''
+    parser = argparse.ArgumentParser()
+    parser.add_argument('model_dir', type=str, help='Directory containing a dumped Acumos Python model')
+    parser.add_argument('--host', type=str, default='0.0.0.0', help='The interface to bind to')
+    parser.add_argument('--port', type=int, default=3330, help='The port to bind to')
+    parser.add_argument('--workers', type=int, default=1, help='The number of gunicorn workers to spawn')
+    parser.add_argument('--timeout', type=int, default=120, help='Time to wait (seconds) before a frozen worker is restarted')
+    parser.add_argument('--cors', type=str, default=None, help="Enables CORS if provided. Can be a domain, comma-separated list of domains, or '*'")
 
-    try:
-        if app.pargs['json_io']:
-            msg_in = json_format.Parse(bytes_in, model_method.pb_input_type())  # attempt to decode JSON
-            msg_out = model_method.from_pb_msg(msg_in)
-        else:
-            msg_out = model_method.from_pb_bytes(bytes_in)  # default from-bytes method
-        if app.pargs['json_io']:
-            bytes_out = json_format.MessageToJson(msg_out.as_pb_msg())
-            content_type = "application/javascript;charset=UTF-8"
-        else:
-            bytes_out = msg_out.as_pb_bytes()
-    except json_format.ParseError as e:
-        type_input = list(model_method.pb_input_type.DESCRIPTOR.fields_by_name.keys())
-        str_reply = "[invoke_method]: Value specification error, expected  {}, {}".format(type_input, e)
-        logger.info(str_reply)
-        resp = make_response(str_reply, 400)
-    except (ValueError, TypeError) as e:
-        str_reply = "[invoke_method]: Value conversion error: {}".format(e)
-        logger.info(str_reply)
-        resp = make_response(str_reply, 400)
+    pargs = parser.parse_args()
 
-    if bytes_out is not None:
-        resp = None
-        for url in downstream:
-            try:
-                req_response = requests.post(url, data=bytes_out)
-                if resp is None:  # save only first response from downstream list
-                    resp = make_response(req_response.content, req_response.status_code)
-                    for header_test in ['Content-Type', 'content-type']:  # test for content type to copy from downstream
-                        if header_test in req_response:
-                            content_type = req_response[header_test]
-            except Exception as e:
-                logger.warn("Failed to publish to downstream url {} : {}".format(url, e))
-        if app.pargs['no_output']:
-            resp = make_response('OK', 201)
-        else:
-            if resp is None:  # only if not received from downstream
-                resp = make_response(bytes_out, 201)
+    app = create_app(**vars(pargs))
+    app.run()
 
-    resp.headers['Access-Control-Allow-Origin'] = '*'
-    resp.headers['Content-Type'] = content_type
-    return resp
+
+def create_app(model_dir, host, port, workers=1, timeout=120, cors=None):
+    '''Creates and returns the model runner gunicorn application
+
+    Parameters
+    ----------
+    model_dir : str
+        Directory containing a dumped Acumos Python model
+    host : str
+        The interface to bind to
+    port : int
+        The port to bind to
+    workers : int, optional
+        The number of gunicorn workers to spawn
+    timeout : int, optional
+        Time to wait (seconds) before a frozen worker is restarted
+    cors : str, optional
+        Enables CORS if provided. Can be a domain, comma-separated list of domains, or '*'
+    '''
+    _write_oas(model_dir)
+    return StandaloneApplication(model_dir, host, port, workers, timeout, cors)
+
+
+def _write_oas(model_dir):
+    '''Writes an Open API specification file the model directory'''
+    with open(path_join(model_dir, 'metadata.json')) as file:
+        metadata = json.load(file)
+
+    with open(path_join(model_dir, 'model.proto')) as file:
+        proto = file.read()
+
+    oas_yaml = create_oas(metadata, proto)
+    with open(path_join(model_dir, 'oas.yaml'), 'w') as file:
+        file.write(oas_yaml)
 
 
 class StandaloneApplication(BaseApplication):
     '''Custom gunicorn app. Modified from http://docs.gunicorn.org/en/stable/custom.html'''
 
-    def __init__(self, pargs_raw, logger=None):
-        self.pargs = self.parse_config(pargs_raw)
-        self.options = {'bind': "{}:{}".format(self.pargs['host'], self.pargs['port']),
-                        'workers': self.pargs['workers'],
-                        'timeout': self.pargs['timeout']}
-        self.logger_ext = logger if logger is not None else logging.getLogger(__name__)
-        self.logger_ext.info("[configuration]: {}".format(self.pargs))
-        self.launch_event = Event()
-        self.launch_event.clear()
-        self.launch_count = Value('i', self.pargs['workers'])
+    def __init__(self, model_dir, host, port, workers, timeout, cors):
+        self.model_dir = model_dir
+        self.cors = cors
+        self.options = {'bind': "{}:{}".format(host, port), 'workers': workers, 'timeout': timeout}
         super().__init__()
 
     def load_config(self):
@@ -118,84 +102,40 @@ class StandaloneApplication(BaseApplication):
             self.cfg.set(key.lower(), value)
 
     def load(self):
-        return StandaloneApplication.build_app(self)
+        return _build_app(self.model_dir, self.cors)
 
-    def wait_for_startup(self, time_interval=2):
-        while self.launch_count.value > 0:
-            self.launch_event.clear()
-            self.launch_event.wait(time_interval)
-            if self.logger_ext is not None:
-                self.logger_ext.info("[wait_for_startup]: Waiting for {} of {} processes to start...".format(
-                    self.launch_count.value, self.pargs['workers']))
 
-    def parse_config(self, pargs):
-        parser = argparse.ArgumentParser(
-            description="""A script to parse and instantiate an Acumos python model""",
-            # epilog="""A running example to process 10 seconds from one minute into the clip...
-            #    python transcribe.py  -i ../data/att-dtv.videohd.mp4 -t 10 -s 60
-            # """
-        )
-        submain = parser.add_argument_group('main arguments')
-        submain.add_argument("--modeldir", type=str, default='', help='specify the model directory to load')
-        submain.add_argument("--host", type=str, default='0.0.0.0', help='the host IP to serve from')
-        submain.add_argument("--port", type=int, default=3330, help='the host PORT to serve from')
-        submain.add_argument("--timeout", type=int, default=120, help='instantiation timeout (in seconds) during start-up')
-        submain.add_argument("--workers", type=int, default=2, help='number of concurrent processes to instantiate')
-        submain = parser.add_argument_group('cascade and downstream forwarding arguments')
-        submain.add_argument("--no_output", action='store_true', help='do not return output in response, only send downstream')
-        submain.add_argument("--no_downstream", action='store_true', help='ignore downstream arguments even if in runtime')
-        submain.add_argument("--json_io", action='store_true', help='(alpha) input+output rich JSON instead of protobuf')
+def _build_app(model_dir, cors):
+    '''Builds and returns a Flask app'''
+    connexion_app = App('model_runner', specification_dir=model_dir)
+    connexion_app.add_api('oas.yaml', resolver=_CustomResolver())
 
-        config_defaults, _ = parser.parse_known_args()
-        config_defaults = vars(config_defaults)
-        config_defaults.update(pargs)
-        pargs = config_defaults
-        if len(pargs['modeldir']) == 0 or not path.exists(pargs['modeldir']):
-            print("Please verify `modeldir` setting and existance, no model was found.")
-            parser.print_help()
-            sys.exit(2)
-        return pargs
+    flask_app = connexion_app.app
+    flask_app.model = load_model(model_dir)
+    flask_app.model_dir = model_dir
 
-    @staticmethod
-    def build_app(app_instance):
-        '''Builds and returns a Flask app'''
-        downstream = []
-        if path.exists('runtime.json'):
-            with open('runtime.json') as f:
-                runtime = json.load(f)  # ad-hoc way of giving the app runtime parameters
-                if not app_instance.pargs['no_downstream']:
-                    downstream = runtime['downstream']  # list of IP:port/path urls
-                    app_instance.logger_ext.info("Found downstream forward routes {}".format(downstream))
+    @flask_app.route('/')
+    def redirect_ui():
+        return redirect('/ui')
+
+    _apply_cors(flask_app, cors)
+
+    return flask_app
+
+
+def _apply_cors(app, cors):
+    '''Configures a Flask app with CORS'''
+    if isinstance(cors, str):
+        origins = cors if cors == '*' else cors.split(',')
+        CORS(app, origins=origins)
+
+
+class _CustomResolver(Resolver):
+
+    def resolve_function_from_operation_id(self, operation_id):
+        '''Routes model methods to a generic handler so that methods can be enumerated in the OAS'''
+        if operation_id.startswith('methods'):
+            _, method_name = operation_id.split('.')
+            return partial(methods, method_name=method_name)
         else:
-            app_instance.pargs['return_output'] = True
-
-        # singleton to run in Flask, other property data is associated with app_instance
-        app = Flask(__name__)
-        # refers to ./model dir in pwd. generated by helper script also in this dir
-        app_instance.model = load_model(app_instance.pargs['modeldir'])
-
-        # dynamically add handlers depending on model capabilities
-        for method_name, method in app_instance.model.methods.items():
-            handler = partial(invoke_method, model_method=method, downstream=downstream, app=app_instance)
-            url = "/{}".format(method_name)
-            app.add_url_rule(url, method_name, handler, methods=['POST', 'GET'])
-
-            # render down the input in few forms
-            typeInput = list(method.pb_input_type.DESCRIPTOR.fields_by_name.keys())
-
-            # render down the output in few forms
-            typeOutput = list(method.pb_output_type.DESCRIPTOR.fields_by_name.keys())
-            app_instance.logger_ext.warn("[build_app]: Adding route {} [input:{}, output:{}]".format(url, typeInput, typeOutput))
-        # indicate that our value is done
-        app_instance.launch_count.value -= 1
-        app_instance.launch_event.set()
-        return app
-
-
-def run(config={}):
-    StandaloneApplication(config).run()
-
-
-if __name__ == '__main__':
-    '''Main'''
-    run()
+            return super().resolve_function_from_operation_id(operation_id)

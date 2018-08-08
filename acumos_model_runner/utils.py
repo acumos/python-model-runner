@@ -16,4 +16,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ===============LICENSE_END=========================================================
-__version__ = '0.2.0'
+"""
+Provides model runner utilities
+"""
+from os.path import dirname, join as path_join
+
+
+_DATA_DIR = path_join(dirname(__file__), 'data')
+
+
+def data_path(*path, prefix=_DATA_DIR):
+    '''Returns an absolute path given a relative path from the acumos_model_runner/data/ dir'''
+    return path_join(prefix, *path)
+
+
+def load_data(*path, prefix=_DATA_DIR, mode='r', loader=lambda file: file.read()):
+    '''Loads and returns the contents of a file in the acumos_model_runner/data/ dir'''
+    with open(data_path(*path, prefix=prefix), mode) as file:
+        return loader(file)

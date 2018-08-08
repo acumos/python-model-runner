@@ -16,4 +16,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ===============LICENSE_END=========================================================
-__version__ = '0.2.0'
+'''
+Provides tests for OAS generation
+'''
+import json
+
+import pytest
+
+from acumos_model_runner.proto_parser import parse_proto
+from acumos_model_runner.oas_gen import _create_definitions
+
+from testing_utils import load_testing_data
+
+
+def test_oas_defs():
+    '''Tests correct generation of oas definitions'''
+    proto = load_testing_data('sample.proto')
+    top_level = parse_proto(proto)
+    oas_defs = _create_definitions(top_level)
+    assert oas_defs == load_testing_data('sample.json', loader=json.load)
+
+
+if __name__ == '__main__':
+    '''Test area'''
+    pytest.main([__file__, ])
