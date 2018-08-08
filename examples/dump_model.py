@@ -16,4 +16,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ===============LICENSE_END=========================================================
-__version__ = '0.2.0'
+'''
+Dumps an example model for illustrating acumos_model_runner usage
+'''
+from collections import Counter
+
+from acumos.session import AcumosSession
+from acumos.modeling import Model, List, Dict
+
+
+def add(x: int, y: int) -> int:
+    '''Adds two numbers'''
+    return x + y
+
+
+def count(strings: List[str]) -> Dict[str, int]:
+    '''Counts the occurrences of words in `strings`'''
+    return Counter(strings)
+
+
+if __name__ == '__main__':
+    '''Main'''
+    model = Model(add=add, count=count)
+
+    session = AcumosSession()
+    session.dump(model, 'example-model', '.')

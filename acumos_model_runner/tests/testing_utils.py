@@ -16,4 +16,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ===============LICENSE_END=========================================================
-__version__ = '0.2.0'
+'''
+Provides testing utilities
+'''
+from functools import partial
+from os.path import dirname
+
+from acumos_model_runner.utils import load_data
+
+
+_TEST_DIR = dirname(__file__)
+
+load_testing_data = partial(load_data, prefix=_TEST_DIR)
