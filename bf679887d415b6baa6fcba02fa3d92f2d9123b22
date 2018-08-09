@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "95645739_978d2c87",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-08-09T17:11:36Z",
+      "side": 1,
+      "message": "Sure, a new public function could be added to run the model programmatically. To confirm, it would be a blocking function because it would invoke the gunicorn server.",
+      "parentUuid": "101e8e68_ab863c41",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bb2caa7_3f909236",
         "filename": "acumos_model_runner/runner.py",
         "patchSetId": 3
@@ -155,6 +173,24 @@
       "side": 1,
       "message": "Okay, this exposes my unfamiliarity with new code flow path.  Ack that this is a test class, but wherever the method is created for Flask interaction, we need to create the above header.  Will look in other classes to drop similar comment.",
       "parentUuid": "109fb960_fe430da2",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad29a74d_82d96825",
+        "filename": "acumos_model_runner/tests/runner_helper.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-08-09T17:11:36Z",
+      "side": 1,
+      "message": "To confirm, you\u0027re saying to include Access-Control-Allow-Origin: * to the response header for each request? FYI this handler is implemented in acumos_model_runner.api.methods",
+      "parentUuid": "f8f186d7_5ddcafa0",
       "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
@@ -402,6 +438,24 @@
       "side": 1,
       "message": "Okay, not sure which pattern should be followed.  FYI, wasn\u0027t changed in rev 5.",
       "parentUuid": "df020f07_3d2bfddd",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "397ac0d2_457217e0",
+        "filename": "setup.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-08-09T17:11:36Z",
+      "side": 1,
+      "message": "Good catch x2. I\u0027ll fix it in the next one",
+      "parentUuid": "7d41e6b0_fa2b96f9",
       "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true

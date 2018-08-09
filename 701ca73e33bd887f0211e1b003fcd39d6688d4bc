@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "e6be5bc1_9c687d14",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-08-09T17:11:36Z",
+      "side": 0,
+      "message": "There are a couple of topics packed in here. \n\nFirst, I don\u0027t think we should add a public API for programmatic running if its only usage is for a unit test. The unit test should test the actual CLI usage by end-users (which is probably just the entrypoint of a docker image). \n\nSecond, if another concern is endless looping due to loading a big model, we can use Gunicorn hooks to terminate the application (http://docs.gunicorn.org/en/stable/settings.html#worker-abort). \n\nUpon further inspection, this code will loop infinitely if the counter is not decremented. Why not just have a very large timeout?",
+      "parentUuid": "315f372f_ffe0b509",
+      "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4d1e2ee_5ced40b7",
         "filename": "acumos_model_runner/runner.py",
         "patchSetId": 3
@@ -108,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "a2756b03_2560b6f6",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-08-09T17:11:36Z",
+      "side": 0,
+      "message": "An intermediate solution could be a one-off script tucked in the examples folder. Regarding developer burden, I\u0027m not aware of any concrete use cases that rely on this forwarding feature. Also, isn\u0027t this the purpose of the Model Connector component in Acumos?\n\nOther runners are basically implemented in an ad-hoc manner, this is the first attempt at standardizing model runners.\n\nIMO adding HTTP forwarding is very application-specific, and needlessly complicates the API and its semantics. Why not add downstream end points for Spark Streaming, Kafka, ZMQ, etc.? What are the semantics of a request that forwards to 3 downstream nodes, and 1 fails due to a timeout or network failure? These are the concerns of a system made for transporting messages.",
+      "parentUuid": "e73ab45f_c2972537",
+      "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2eae965e_376ef531",
         "filename": "acumos_model_runner/runner.py",
         "patchSetId": 3
@@ -155,6 +191,24 @@
       "side": 0,
       "message": "Sorry, for specificity demand, but what is the import, the \u0027ModelRunner\u0027 test class?",
       "parentUuid": "5906dc6d_b55b4549",
+      "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ab56b4a_dbdad92b",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-08-09T17:11:36Z",
+      "side": 0,
+      "message": "The ModelRunner class in acumos_model_runner/tests/runner_helper.py is just a simple context manager that controls a child process that is using the model runner CLI. You could use it directly, or the more convenient _run_model function in test_runner.py (although then we should factor that as a public testing utility).",
+      "parentUuid": "b2f7b4e9_a760938f",
       "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
