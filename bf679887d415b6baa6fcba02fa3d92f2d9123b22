@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "101e8e68_ab863c41",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-09T15:32:23Z",
+      "side": 1,
+      "message": "It sticks as a functional loss because we either need (a) a way to run the models via code (using the flask server) or (b) capability to forward trivially.   Please look at forwarding discussion elsewhere for comment on sidecar.",
+      "parentUuid": "268924eb_62f27f19",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bb2caa7_3f909236",
         "filename": "acumos_model_runner/runner.py",
         "patchSetId": 3
@@ -69,6 +87,24 @@
       "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5999fc6a_53fe6ae4",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-09T15:32:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ddef203c_efa479a5",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "f8f186d7_5ddcafa0",
+        "filename": "acumos_model_runner/tests/runner_helper.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-09T15:32:23Z",
+      "side": 1,
+      "message": "Okay, this exposes my unfamiliarity with new code flow path.  Ack that this is a test class, but wherever the method is created for Flask interaction, we need to create the above header.  Will look in other classes to drop similar comment.",
+      "parentUuid": "109fb960_fe430da2",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d575b213_cf1ac474",
         "filename": "acumos_model_runner/tests/runner_helper.py",
         "patchSetId": 3
@@ -121,6 +175,24 @@
       "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904f9959_c77215e4",
+        "filename": "acumos_model_runner/tests/runner_helper.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-09T15:32:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d575b213_cf1ac474",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     },
     {
       "key": {
@@ -159,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "e2aeb97c_ba9e2a65",
+        "filename": "acumos_model_runner/tests/runner_helper.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-09T15:32:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0f1ba61b_79be106b",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "031ef7d2_802c6c51",
         "filename": "acumos_model_runner/tests/test_runner.py",
         "patchSetId": 3
@@ -191,6 +281,24 @@
       "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "836fd8f6_c6676144",
+        "filename": "acumos_model_runner/tests/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-09T15:32:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1510135e_fa3437f9",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     },
     {
       "key": {
@@ -229,6 +337,24 @@
     },
     {
       "key": {
+        "uuid": "b1b6d125_d110793a",
+        "filename": "docs/tutorial/index.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-09T15:32:23Z",
+      "side": 1,
+      "message": "Okay, may be a little riskier to refer to the repo instead of static docs, but ack motivation.  \nFYI, linkage to JIRA - https://jira.acumos.org/browse/ACUMOS-1482",
+      "parentUuid": "d505f01b_0e109279",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22e7b281_ec3a15f7",
         "filename": "setup.py",
         "patchSetId": 3
@@ -258,6 +384,24 @@
       "side": 1,
       "message": "Yes, good catch",
       "parentUuid": "22e7b281_ec3a15f7",
+      "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d41e6b0_fa2b96f9",
+        "filename": "setup.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-09T15:32:23Z",
+      "side": 1,
+      "message": "Okay, not sure which pattern should be followed.  FYI, wasn\u0027t changed in rev 5.",
+      "parentUuid": "df020f07_3d2bfddd",
       "revId": "bf679887d415b6baa6fcba02fa3d92f2d9123b22",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
