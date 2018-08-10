@@ -52,6 +52,24 @@
       "revId": "0edef3285cc2e7099a46811ccca5728295e24f30",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c566db_6d23d79c",
+        "filename": "acumos_model_runner/api.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-08-10T15:16:39Z",
+      "side": 1,
+      "message": "I\u0027m confused. CORS becomes a problem only when interacting with a model runner from a browser, right? If there was a reverse proxy being used for a given origin, the model runner could be used directly via a HTTP proxy without any issues due to SOP. \n\nSo adding CORS features to the model runner would only be for supporting direct browser \u003c--\u003e runner communication, which I\u0027m questioning. A single model runner should probably never be interacting with a browser directly, especially because these are CPU-bound operations that block other requests.",
+      "parentUuid": "84ff5884_8e9ff9e7",
+      "revId": "0edef3285cc2e7099a46811ccca5728295e24f30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
     }
   ]
 }
