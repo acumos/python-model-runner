@@ -106,6 +106,24 @@
       "revId": "0edef3285cc2e7099a46811ccca5728295e24f30",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0692759d_2af04364",
+        "filename": "acumos_model_runner/api.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-10T19:40:18Z",
+      "side": 1,
+      "message": "Harsh aside, this is exactly the intention.  The CLI input parameter (to specify the host) is perfect.  Closing comment.",
+      "parentUuid": "89244ad4_d1eb386f",
+      "revId": "0edef3285cc2e7099a46811ccca5728295e24f30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     }
   ]
 }
