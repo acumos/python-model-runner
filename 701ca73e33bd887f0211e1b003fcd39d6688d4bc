@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "70cfe66a_0d20eb47",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-08-10T14:36:17Z",
+      "side": 0,
+      "message": "re: termination\nI believe this callback is executed in the master process, so you can kill remaining children using the gunicorn API and exit.\n\nThe application can be stopped by sending a sigint to the process, or using the Arbiter API. However without a concrete use case I\u0027m reluctant to add more features / complexity to the project for stopping the server with a native Python API.\n\nI\u0027d suggest that the developer create a one-off script for managing multiple processes and using system calls.",
+      "parentUuid": "822f9d16_f99e1e4e",
+      "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4d1e2ee_5ced40b7",
         "filename": "acumos_model_runner/runner.py",
         "patchSetId": 3
@@ -174,6 +192,24 @@
       "side": 0,
       "message": "Okay, almost ready to let it pass.  However, it would be great if there was still a way to test/use forwarding outside of the onion layers of a docker image and model connector from Acumos.  The idea of a nested example to load up arbitrary models (e.g. just provide an array of directories) and allow a one-to-one cascade is amenable.  Nothing more complex is required/requested.",
       "parentUuid": "a2756b03_2560b6f6",
+      "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29fffc03_bbf15799",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-08-10T14:36:17Z",
+      "side": 0,
+      "message": "Sure, I could create such an example. I\u0027m fine with adding \"recipes\" outside the core scope of the model runner. My goal is to avoid bloating the project to account for the long tail of use cases.",
+      "parentUuid": "fa52e4ce_28d137a2",
       "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
