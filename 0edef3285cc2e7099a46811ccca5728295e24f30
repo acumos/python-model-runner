@@ -16,6 +16,24 @@
       "revId": "0edef3285cc2e7099a46811ccca5728295e24f30",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c42d7a_b59afe4f",
+        "filename": "acumos_model_runner/api.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-08-10T14:36:17Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s a safe assumption to always have Access-Control-Allow-Origin: *. People may want control over the origin. \n\nFurther, is this something that should even be a feature of a model runner? Why not delegate this concern to a more appropriate system, like nginx, docker swarm, or kubernetes? Is adding this CORS feature just compensating for lack of proper infrastructure again, akin to forwarding?",
+      "parentUuid": "f33323d2_50195798",
+      "revId": "0edef3285cc2e7099a46811ccca5728295e24f30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
     }
   ]
 }
