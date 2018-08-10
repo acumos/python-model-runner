@@ -34,6 +34,24 @@
       "revId": "0edef3285cc2e7099a46811ccca5728295e24f30",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84ff5884_8e9ff9e7",
+        "filename": "acumos_model_runner/api.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-10T14:51:45Z",
+      "side": 1,
+      "message": "As used in the Acumos platform, the model runner will never be directly exposed.  For that reason, constricting access seems precarious at best -- we already saw performance issues when running in a docker image vs. localhost vs. remote host.  You\u0027re completely right that additional restrictions should be the job of other layers, so that\u0027s why we need to keep these headers from a deep internal layer. (e.g. the model runner) as liberal as possible.",
+      "parentUuid": "60c42d7a_b59afe4f",
+      "revId": "0edef3285cc2e7099a46811ccca5728295e24f30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
     }
   ]
 }
