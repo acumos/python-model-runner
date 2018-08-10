@@ -70,6 +70,24 @@
       "revId": "0edef3285cc2e7099a46811ccca5728295e24f30",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90fd8898_c9bc5b78",
+        "filename": "acumos_model_runner/api.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-10T15:35:08Z",
+      "side": 1,
+      "message": "There is confusion around where/why.  My point is the runner will never be deployed directly, so having this header allows the most compatibility (e.g. developer debugging).  Subsequent layers can override or strip the header, but for developers trying to test from their local machine there is no option except to modify the model runner :/\n\nSpecifically, without the CORS headers, demonstration modes for models that exist in Acumos (e.g. image, face, etc) will be broken -- so a little selfish, but also for developer options.",
+      "parentUuid": "04c566db_6d23d79c",
+      "revId": "0edef3285cc2e7099a46811ccca5728295e24f30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
     }
   ]
 }
