@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "4d2c2e7f_7e0ef49e",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-10T14:51:45Z",
+      "side": 0,
+      "message": "Willing to accept with this explanation given lack of immediate use case.  Also, appeased with offer of secondary script.",
+      "parentUuid": "70cfe66a_0d20eb47",
+      "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4d1e2ee_5ced40b7",
         "filename": "acumos_model_runner/runner.py",
         "patchSetId": 3
@@ -213,6 +231,24 @@
       "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1c0dee_3078c4aa",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-10T14:51:45Z",
+      "side": 0,
+      "message": "This is a good middle-ground, thanks.  (also hauntingly reminiscent of how the model runner itself started, as a helper script in the client library).  Will mark \u0027resolved\u0027 in expectation of next small script example.",
+      "parentUuid": "29fffc03_bbf15799",
+      "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     },
     {
       "key": {
