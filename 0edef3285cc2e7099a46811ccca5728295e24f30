@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f33323d2_50195798",
+        "filename": "acumos_model_runner/api.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-10T13:23:06Z",
+      "side": 1,
+      "message": "Pulling in from other comment, please add the CORS compliance header.\n\n---\nTo confirm, you\u0027re saying to include Access-Control-Allow-Origin: * to the response header for each request? FYI this handler is implemented in acumos_model_runner.api.methods\n---",
+      "revId": "0edef3285cc2e7099a46811ccca5728295e24f30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    }
+  ]
+}
