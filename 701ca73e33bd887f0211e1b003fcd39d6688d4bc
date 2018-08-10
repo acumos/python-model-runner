@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "822f9d16_f99e1e4e",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-10T13:23:06Z",
+      "side": 0,
+      "message": "re: API\nsure, the previous unit test was hammering on the timeout setting, which may not need to be because it comes directly from the other library.\n\nre: termination\nThis link is not an exact match .  Now that there is an API to launch a server (in the main runner script), how can we terminate the server with a single programatic call?  I don\u0027t have a specific use case in mind here, but maybe the developer wants to kill and restart a different server, as an example.  Admittedly, there are diminishing returns from this thread.\n\nre: loop decrement\nThe counter was to (a) gate until all processes were started and (b) kill the server, nothing more.",
+      "parentUuid": "e6be5bc1_9c687d14",
+      "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4d1e2ee_5ced40b7",
         "filename": "acumos_model_runner/runner.py",
         "patchSetId": 3
@@ -138,6 +156,24 @@
       "side": 0,
       "message": "An intermediate solution could be a one-off script tucked in the examples folder. Regarding developer burden, I\u0027m not aware of any concrete use cases that rely on this forwarding feature. Also, isn\u0027t this the purpose of the Model Connector component in Acumos?\n\nOther runners are basically implemented in an ad-hoc manner, this is the first attempt at standardizing model runners.\n\nIMO adding HTTP forwarding is very application-specific, and needlessly complicates the API and its semantics. Why not add downstream end points for Spark Streaming, Kafka, ZMQ, etc.? What are the semantics of a request that forwards to 3 downstream nodes, and 1 fails due to a timeout or network failure? These are the concerns of a system made for transporting messages.",
       "parentUuid": "e73ab45f_c2972537",
+      "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa52e4ce_28d137a2",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-10T13:23:06Z",
+      "side": 0,
+      "message": "Okay, almost ready to let it pass.  However, it would be great if there was still a way to test/use forwarding outside of the onion layers of a docker image and model connector from Acumos.  The idea of a nested example to load up arbitrary models (e.g. just provide an array of directories) and allow a one-to-one cascade is amenable.  Nothing more complex is required/requested.",
+      "parentUuid": "a2756b03_2560b6f6",
       "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
@@ -212,6 +248,24 @@
       "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7924ca4b_d03e61aa",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2018-08-10T13:23:06Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "2ab56b4a_dbdad92b",
+      "revId": "701ca73e33bd887f0211e1b003fcd39d6688d4bc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     }
   ]
 }
