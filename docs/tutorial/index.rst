@@ -89,16 +89,25 @@ The Swagger UI enumerates model method APIs, as well as APIs for accessing model
 Count Method API
 ----------------
 
-Expanding the documentation for the ``count`` method reveals more information on how to invoke the API. Below, the HTML form is used to input sample data.
+Expanding the documentation for the ``count`` method reveals more information on how to invoke the API.
 
 |Model Method|
 
 .. |Model Method| image:: https://gerrit.acumos.org/r/gitweb?p=python-model-runner.git;a=blob_plain;f=docs/tutorial/example-model-method.png;hb=HEAD
 
+Count Method Request
+--------------------
+
+The Swagger UI provides an input form that can be used to try out the ``count`` API with sample data.
+
+|Model Method Request|
+
+.. |Model Method Request| image:: https://gerrit.acumos.org/r/gitweb?p=python-model-runner.git;a=blob_plain;f=docs/tutorial/example-model-request.png;hb=HEAD
+
 Count Method Response
 ---------------------
 
-The response from the ``count`` method shows that everything is working as expected!
+The response from the ``count`` API shows that everything is working as expected!
 
 |Model Method Response|
 

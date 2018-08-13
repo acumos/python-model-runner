@@ -27,7 +27,7 @@ Acumos Python Model Runner User Guide
 
 The ``acumos_model_runner`` package installs a command line tool ``acumos_model_runner`` for running models created by the `Acumos Python client library <https://pypi.org/project/acumos/>`__.
 
-The model runner provides an HTTP API for invoking model methods, as well as a `Swagger UI <https://swagger.io/>`__ for documentation. See the tutorial for more information on usage.
+The model runner provides an HTTP API for invoking model methods, as well as a `Swagger UI <https://swagger.io/tools/swagger-ui/>`__ for documentation. See the tutorial for more information on usage.
 
 Installation
 ============

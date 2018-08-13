@@ -20,11 +20,15 @@
 Acumos Python Model Runner Release Notes
 ========================================
 
+v0.2.1
+======
+- Upgraded Swagger UI from v2 to v3
+
 v0.2.0
 ======
 - Overhaul of model runner API
 - Added support for ``application/json`` via ``Content-Type`` and ``Accept`` headers
-- Added automatic generation of `OpenAPI Specification <https://swagger.io/docs/specification/2-0/basic-structure/>`__ and `Swagger UI <https://swagger.io/>`__
+- Added automatic generation of `OpenAPI Specification <https://swagger.io/docs/specification/2-0/basic-structure/>`__ and `Swagger UI <https://swagger.io/tools/swagger-ui/>`__
 - Added support for CORS
 
 v0.1.0
