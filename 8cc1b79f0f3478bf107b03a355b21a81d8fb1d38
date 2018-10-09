@@ -1,0 +1,8 @@
+Code-Review+1: Chris Lott <clott@research.att.com>
+Verified+1: Acumos Jobbuilder <acumos-jobbuilder@jenkins.acumos.org>
+Code-Review+2: Eric Z <ezavesky@research.att.com>
+Submitted-by: Eric Z <ezavesky@research.att.com>
+Submitted-at: Tue, 09 Oct 2018 21:41:28 +0000
+Reviewed-on: https://gerrit.acumos.org/r/3059
+Project: python-model-runner
+Branch: refs/heads/master
