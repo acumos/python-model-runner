@@ -6,4 +6,14 @@
     <groupId>org.acumos.python-model-runner</groupId>
     <artifactId>python-model-runner</artifactId>
     <version>0.2.2</version> <!-- REPEATED IN acumos_model_runner/_version.py MUST MATCH -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.sources>.</sonar.sources>
+        <sonar.junit.reportsPath>xunit-results.xml</sonar.junit.reportsPath>
+        <sonar.python.coverage.reportPath>coverage.xml</sonar.python.coverage.reportPath>
+        <sonar.language>py</sonar.language>
+        <sonar.pluginname>python</sonar.pluginname>
+        <sonar.inclusions>**/**.py</sonar.inclusions>
+        <sonar.exclusions>**/tests/**.py,**/test*.py</sonar.exclusions>
+    </properties>
 </project>
