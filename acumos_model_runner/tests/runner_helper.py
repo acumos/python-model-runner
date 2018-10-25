@@ -75,20 +75,12 @@ class Api(object):
         resp.raise_for_status()
         return resp.content
 
-    def protobuf(self):
-        '''Returns a model's protobuf str'''
-        return self._get('/model/artifacts/protobuf')
-
-    def metadata(self):
-        '''Returns a model's metadata json str'''
-        return self._get('/model/artifacts/metadata')
-
-    def _get(self, path):
+    def get(self, path):
         '''GETs a model's resource'''
         url = self._full_url(path)
         resp = requests.get(url)
         resp.raise_for_status()
-        return resp.text
+        return resp
 
     def _full_url(self, path):
         '''Creates a full URL given a path'''

@@ -20,6 +20,11 @@
 Acumos Python Model Runner Release Notes
 ========================================
 
+v0.2.2
+======
+- Fixed 404 bug for model artifact resources caused by relative model directory
+- Fixed incorrect media type for protobuf resource
+
 v0.2.1
 ======
 - Upgraded Swagger UI from v2 to v3

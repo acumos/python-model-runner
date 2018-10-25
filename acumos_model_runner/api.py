@@ -62,10 +62,10 @@ def _get_header(name):
     return header
 
 
-def artifacts(filename):
+def artifacts(filename, mimetype=None):
     '''Generic handler for model artifacts'''
-    return send_from_directory(current_app.model_dir, filename)
+    return send_from_directory(current_app.model_dir, filename, mimetype=mimetype)
 
 
-metadata = partial(artifacts, filename='metadata.json')
-protobuf = partial(artifacts, filename='model.proto')
+metadata = partial(artifacts, filename='metadata.json', mimetype=_JSON)
+protobuf = partial(artifacts, filename='model.proto', mimetype='text/plain')

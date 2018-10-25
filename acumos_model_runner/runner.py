@@ -70,6 +70,7 @@ def create_app(model_dir, host, port, workers=1, timeout=120, cors=None):
     cors : str, optional
         Enables CORS if provided. Can be a domain, comma-separated list of domains, or '*'
     '''
+    model_dir = abspath(model_dir)
     _write_oas(model_dir)
     return StandaloneApplication(model_dir, host, port, workers, timeout, cors)
 
@@ -108,7 +109,7 @@ class StandaloneApplication(BaseApplication):
 
 def _build_app(model_dir, cors):
     '''Builds and returns a Flask app'''
-    connexion_app = App(__name__, specification_dir=abspath(model_dir), swagger_ui=False)
+    connexion_app = App(__name__, specification_dir=model_dir, swagger_ui=False)
     connexion_app.add_api('oas.yaml', resolver=_CustomResolver())
 
     flask_app = connexion_app.app

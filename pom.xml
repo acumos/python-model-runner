@@ -5,5 +5,5 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.acumos.python-model-runner</groupId>
     <artifactId>python-model-runner</artifactId>
-    <version>0.2.1</version> <!-- REPEATED IN acumos_model_runner/_version.py MUST MATCH -->
+    <version>0.2.2</version> <!-- REPEATED IN acumos_model_runner/_version.py MUST MATCH -->
 </project>
