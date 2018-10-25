@@ -67,11 +67,14 @@ def test_runner():
         api = runner.api
 
         # =============================================================================
-        # verify artifact APIs don't raise
+        # verify artifact APIs
         # =============================================================================
 
-        api.protobuf()
-        api.metadata()
+        resp = api.get('/model/artifacts/protobuf')
+        assert 'text/plain' in resp.headers['Content-Type']
+
+        resp = api.get('/model/artifacts/metadata')
+        assert resp.headers['Content-Type'] == _JSON
 
         # =============================================================================
         # add test
