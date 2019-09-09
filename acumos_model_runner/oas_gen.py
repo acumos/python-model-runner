@@ -71,7 +71,7 @@ def _format_method(name, method):
     '''Returns a method dict to be used in the method template'''
     method_fmt = dict(name=name, **method)
     for key in ('input', 'output'):
-        method_fmt[key] = _prefix_name(method[key])
+        method_fmt[key] = _prefix_name(method[key]['name'])
     return method_fmt
 
 

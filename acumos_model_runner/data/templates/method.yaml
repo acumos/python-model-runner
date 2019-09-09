@@ -7,23 +7,36 @@
       description: {{ method.description|tojson }}
       operationId: "methods.{{ method.name }}"
       consumes:
+        - text/plain
         - application/json
         - application/vnd.google.protobuf
+        - application/octet-stream
       produces:
+        - text/plain
         - application/json
         - application/vnd.google.protobuf
+        - application/octet-stream
       parameters:
         - in: body
           name: body
           description: "An object of type {{ method.input }}"
           required: true
           schema:
+          {% if method.input == "Model.Image" or method.input == "Model.Text" or method.input == "Model.Dict" %}
+            {type: string}
+          {% else %}
             $ref: "#/definitions/{{ method.input }}"
+          {% endif %}
       responses:
         200:
           description: "An object of type {{ method.output }}"
           schema:
+          {% if method.output == "Model.Image" or method.output == "Model.Text" or method.output == "Model.Dict" %}
+            {type: string}
+          {% else %}
             $ref: "#/definitions/{{ method.output }}"
+          {% endif %}
+
         400:
           description: "Invalid request"
         415:
