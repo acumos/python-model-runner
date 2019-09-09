@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e52c323_9c4f27e5",
+        "filename": "acumos_model_runner/data/templates/method.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2019-09-09T14:40:11Z",
+      "side": 1,
+      "message": "I don\u0027t believe it\u0027s correct to list that every method consumes every media type. We should use the model metadata to populate these consumes/produces lists correctly.",
+      "revId": "c811bce7392d7861406eb68b035830b55dd7e12b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a56b489_c7bf83c3",
+        "filename": "examples/raw_example.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2019-09-09T14:40:11Z",
+      "side": 1,
+      "message": "I\u0027m not sure what this example is showing; this script is not using the model runner. If we\u0027re not showing example model runner usage, perhaps this script should be deleted.",
+      "revId": "c811bce7392d7861406eb68b035830b55dd7e12b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}
