@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fab7de84_bf745ff2",
+        "filename": "acumos_model_runner/data/templates/method.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2019-09-10T14:58:37Z",
+      "side": 1,
+      "message": "I don\u0027t think every model method will consume application/json, e.g. if the input is raw bytes. Perhaps you can have \"consumes\" and \"produces\" lists in the method dict (lists because if it\u0027s a protobuf message, you can consume both application/vnd.google.protobuf and application/json), and then here iterate over them in a for-loop using the jinja2 syntax.",
+      "revId": "eec9846166bcb7ba5c38e6cf4ec1a4e37a1fbe9f",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dea17f4a_a1cc13b4",
+        "filename": "acumos_model_runner/data/templates/method.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2019-09-10T14:58:37Z",
+      "side": 1,
+      "message": "Similarly, it may be easier to handle this logic in Python, and just access the result in the method dict here.",
+      "revId": "eec9846166bcb7ba5c38e6cf4ec1a4e37a1fbe9f",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}
