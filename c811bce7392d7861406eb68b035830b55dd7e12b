@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a64589a1_d91cc38c",
+        "filename": "acumos_model_runner/data/templates/method.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 210
+      },
+      "writtenOn": "2019-09-11T00:45:29Z",
+      "side": 1,
+      "message": "yes, make sense, I will update this part in next patchset",
+      "parentUuid": "9e52c323_9c4f27e5",
+      "revId": "c811bce7392d7861406eb68b035830b55dd7e12b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a56b489_c7bf83c3",
         "filename": "examples/raw_example.py",
         "patchSetId": 2
