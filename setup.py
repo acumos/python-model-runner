@@ -56,7 +56,7 @@ setup(
     acumos_model_runner=acumos_model_runner.runner:run_app_cli
     """,
     install_requires=['acumos>=0.5.3',
-                      'lark-parser',
+                      'lark-parser<0.8',
                       'connexion<2.0.0',
                       'gunicorn',
                       'pyyaml',
@@ -70,7 +70,8 @@ setup(
     name='acumos_model_runner',
     packages=find_packages(),
     package_data={'acumos_model_runner': [path_join('data', 'proto3.ebnf'),
-                                          path_join('data', 'templates', '*.yaml')]},
+                                          path_join('data', 'templates', '*.yaml'),
+                                          path_join('data', 'templates', '0.6.0', '*.yaml')]},
     python_requires='>=3.4',
     url='https://gerrit.acumos.org/r/gitweb?p=python-model-runner.git',
     version=__version__,
