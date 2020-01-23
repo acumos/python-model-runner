@@ -83,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "f8989c2f_de96a85f",
+        "filename": "acumos_model_runner/oas_gen.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2020-01-23T19:26:51Z",
+      "side": 1,
+      "message": "I think we\u0027ll need to support multiple versions in order to make usage of the model runner for end-users more sane. \n\nPerhaps we can have a standard representation of API information, which we then convert to Swagger/OAS. This way, we\u0027ll have a function per version which maps metadata --\u003e OAS info, which finally gets mapped to YAML.\n\nRegarding the version, we\u0027ll basically keep what you have, e.g.:\n\n\n```\nversion_str \u003d \u00270.6.0\u0027  # get this from schema\nversion \u003d tuple(map(int, version_str.split(\u0027.\u0027)))\nmajor_minor \u003d version[:2]\n\nif major_minor \u003e (0, 6):\n    raise Exception(\u0027Latest supported schema is 0.6.*\u0027)\nelif major_minor \u003d\u003d (0, 6):\n    do_new_way()\nelse:\n    do_old_way()\n```\n\nWe should really be bumping the major version on breaking schema changes, but this is what we\u0027re working with.",
+      "parentUuid": "7174ac87_50a5e05b",
+      "revId": "a9aadd15d1652ae934ec8209478494657789b3a9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b9321ec_b7ef2197",
         "filename": "acumos_model_runner/oas_gen.py",
         "patchSetId": 1
