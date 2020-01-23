@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "a15ca978_b699715d",
+        "filename": "acumos_model_runner/_version.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-23T16:56:28Z",
+      "side": 1,
+      "message": "pls update here too",
+      "range": {
+        "startLine": 5,
+        "startChar": 21,
+        "endLine": 5,
+        "endChar": 25
+      },
+      "revId": "a9aadd15d1652ae934ec8209478494657789b3a9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cf8eaba_35af41a3",
+        "filename": "acumos_model_runner/oas_gen.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-23T16:56:28Z",
+      "side": 1,
+      "message": "here too",
+      "range": {
+        "startLine": 5,
+        "startChar": 21,
+        "endLine": 5,
+        "endChar": 25
+      },
+      "revId": "a9aadd15d1652ae934ec8209478494657789b3a9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "638118cb_7770397c",
         "filename": "acumos_model_runner/oas_gen.py",
         "patchSetId": 1
@@ -16,6 +62,75 @@
       "revId": "a9aadd15d1652ae934ec8209478494657789b3a9",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b9321ec_b7ef2197",
+        "filename": "acumos_model_runner/oas_gen.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-23T16:56:28Z",
+      "side": 1,
+      "message": "what version is this? does it have to be hardcoded here?",
+      "range": {
+        "startLine": 41,
+        "startChar": 39,
+        "endLine": 41,
+        "endChar": 46
+      },
+      "revId": "a9aadd15d1652ae934ec8209478494657789b3a9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c12652_b5d24383",
+        "filename": "docs/release-notes.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-23T16:56:28Z",
+      "side": 1,
+      "message": "date",
+      "range": {
+        "startLine": 4,
+        "startChar": 22,
+        "endLine": 4,
+        "endChar": 26
+      },
+      "revId": "a9aadd15d1652ae934ec8209478494657789b3a9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be28c3f5_e2ad98d6",
+        "filename": "docs/release-notes.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-23T16:56:28Z",
+      "side": 1,
+      "message": "please start including the date of the release",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 1
+      },
+      "revId": "a9aadd15d1652ae934ec8209478494657789b3a9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
     }
   ]
 }
