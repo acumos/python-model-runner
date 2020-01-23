@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "638118cb_7770397c",
+        "filename": "acumos_model_runner/oas_gen.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2020-01-23T16:52:29Z",
+      "side": 1,
+      "message": "I personally wouldn\u0027t add a new dependency to the package just for parsing the version. You can just convert the string to a tuple, and use tuple comparisons, e.g.:\n\nversion \u003d tuple(map(int, \"0.6.0\".split(\u0027.\u0027)))\nassert version \u003c\u003d (0, 6, 0), \u0027Schema not supported\u0027",
+      "revId": "a9aadd15d1652ae934ec8209478494657789b3a9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}
