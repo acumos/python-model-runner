@@ -2,7 +2,8 @@
 # ===============LICENSE_START=======================================================
 # Acumos Apache-2.0
 # ===================================================================================
-# Copyright (C) 2017-2018 AT&T Intellectual Property & Tech Mahindra. All rights reserved.
+# Copyright (C) 2017-2020 AT&T Intellectual Property & Tech Mahindra. All rights reserved.
+# Modifications Copyright (C) 2020 Nordix Foundation.
 # ===================================================================================
 # This Acumos software file is distributed by AT&T and Tech Mahindra
 # under the Apache License, Version 2.0 (the "License");
@@ -21,7 +22,7 @@ Provides utilities for generating an Open API specification from protobuf IDL an
 """
 import yaml
 from collections import namedtuple
-
+from semver import VersionInfo
 from jinja2 import Environment, FileSystemLoader
 
 from acumos_model_runner.proto_parser import Message, RepeatedField, MapField, Enum, parse_proto
@@ -36,6 +37,9 @@ _OasFormat = namedtuple('_OasFormat', 'type, format, description')
 _OasFormat.__new__.__defaults__ = (None, None, None)
 
 _64NOTE = 'Note: 64-bit integers are string-encoded when using application/json'
+
+# New metadata version which caused breaking changes
+_new_method_schema = VersionInfo.parse("0.6.0")
 
 _PROTO_OAS_MAP = {
     'double': _OasFormat('number', 'double'),
@@ -59,19 +63,34 @@ def create_oas(metadata, protobuf):
     '''Returns an OAS YAML string'''
     top_level = parse_proto(protobuf)
     defs = _create_definitions(top_level)
+    schema =  metadata["schema"]
+    version = schema[schema.index(":")+1:]
+    current_version = VersionInfo.parse(version)
+    versionDir = version;
+    if(current_version < _new_method_schema):
+        versionDir = ''
 
     defs_yaml = yaml.dump(defs, default_flow_style=False)
-    methods = [_format_method(name, method) for name, method in metadata['methods'].items()]
+    methods = [_format_method(name, method, current_version) for name, method in metadata['methods'].items()]
+    templatePath = data_path('templates', versionDir);
+    env = Environment(loader=FileSystemLoader(templatePath), trim_blocks=True)
+    gen_yaml = env.get_template('base.yaml').render(model=metadata, methods=methods, definitions=defs_yaml)
 
-    env = Environment(loader=FileSystemLoader(data_path('templates')), trim_blocks=True)
-    return env.get_template('base.yaml').render(model=metadata, methods=methods, definitions=defs_yaml)
+    return gen_yaml
 
-
-def _format_method(name, method):
+def _format_method(name, method, version):
     '''Returns a method dict to be used in the method template'''
     method_fmt = dict(name=name, **method)
     for key in ('input', 'output'):
-        method_fmt[key] = _prefix_name(method[key])
+        method_fmt[key] = method[key]
+        # after 0.6.0 input,output are objects not just strings
+        if(version >= _new_method_schema):
+            method_fmt[key] = method[key]
+            method_fmt[key]['name'] = _prefix_name(method[key]['name'])
+        else:
+            # older method when input, output were strings
+            method_fmt[key] = _prefix_name(method[key])
+
     return method_fmt
 
 
