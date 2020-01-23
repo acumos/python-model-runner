@@ -1,0 +1,32 @@
+{% macro render_method(method) %}
+
+  /model/methods/{{ method.name }}:
+    post:
+      tags:
+        - methods
+      summary: "Invokes the model method '{{ method.name }}'"
+      description: {{ method.description|tojson }}
+      operationId: "methods.{{ method.name }}"
+      consumes:
+        - application/json
+        - application/vnd.google.protobuf
+      produces:
+        - application/json
+        - application/vnd.google.protobuf
+      parameters:
+        - in: body
+          name: body
+          description: "An object of type {{ method.input.name }}  {{ method.input.description }}"
+          required: true
+          schema:
+            $ref: "#/definitions/{{ method.input.name }}"
+      responses:
+        200:
+          description: "An object of type {{ method.output.name }}   {{ method.output.description }}"
+          schema:
+            $ref: "#/definitions/{{ method.output.name }}"
+        400:
+          description: "Invalid request"
+        415:
+          description: "Invalid media type"
+{% endmacro %}
