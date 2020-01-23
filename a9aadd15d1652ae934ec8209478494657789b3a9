@@ -65,6 +65,24 @@
     },
     {
       "key": {
+        "uuid": "7174ac87_50a5e05b",
+        "filename": "acumos_model_runner/oas_gen.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 290
+      },
+      "writtenOn": "2020-01-23T17:03:41Z",
+      "side": 1,
+      "message": "I agree there prob was better way then introducing library.. I can look at tuple instead if we don\u0027t want to support earlier versions of schema.. otherwise will have to duplicate some of the comparison logic that semver already has if we want to support multiple schema versions.\n\nThe code example shows that schema \u003c 0.6.0 is not supported but that means older models will not run with this version of model runner... do we want to support multiple model schemas or just drop versions.. I had implemented this as compatible with older versions since I know we use a lot of models using previous session dumps.",
+      "parentUuid": "638118cb_7770397c",
+      "revId": "a9aadd15d1652ae934ec8209478494657789b3a9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b9321ec_b7ef2197",
         "filename": "acumos_model_runner/oas_gen.py",
         "patchSetId": 1
