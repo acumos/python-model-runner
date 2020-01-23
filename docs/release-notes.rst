@@ -1,7 +1,8 @@
 .. ===============LICENSE_START============================================================
 .. Acumos CC-BY-4.0
 .. ========================================================================================
-.. Copyright (C) 2017-2018 AT&T Intellectual Property & Tech Mahindra. All rights reserved.
+.. Copyright (C) 2017-2020 AT&T Intellectual Property & Tech Mahindra. All rights reserved.
+.. Modifications Copyright (C) 2020 Nordix Foundation.
 .. ========================================================================================
 .. This Acumos documentation file is distributed by AT&T and Tech Mahindra
 .. under the Creative Commons Attribution 4.0 International License (the "License");
@@ -19,6 +20,12 @@
 ========================================
 Acumos Python Model Runner Release Notes
 ========================================
+
+v0.2.3, 23 January 2020
+=======================
+- larkparser lark-parser<0.8.0 pinning to prevent error
+- Fixing issue with using 0.6.0 model metadata schema - works with model metadata versions <0.6.0 and 0.6.0
+- python removing 3.5 support
 
 v0.2.2
 ======
