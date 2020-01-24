@@ -281,6 +281,30 @@
       "revId": "a9aadd15d1652ae934ec8209478494657789b3a9",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8c3683e_642ae96b",
+        "filename": "docs/release-notes.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 290
+      },
+      "writtenOn": "2020-01-24T16:35:55Z",
+      "side": 1,
+      "message": "I tried this but ran into build failures...  it looks like adding the date requires some additional configuration change.\n\nChecking dist/acumos_model_runner-0.2.3-py2.py3-none-any.whl: FAILED\n  `long_description` has syntax errors in markup and would not be rendered on PyPI.\n    line 208: Warning: Title underline too short.\n\n    v0.2.3, 23 January 2020\n    \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n  warning: `long_description_content_type` missing.  defaulting to `text/x-rst`.\nChecking dist/acumos_model_runner-0.2.3.tar.gz: FAILED\n  `long_description` has syntax errors in markup and would not be rendered on PyPI.\n    line 208: Warning: Title underline too short.",
+      "parentUuid": "e461ca7e_32ff93ce",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 1
+      },
+      "revId": "a9aadd15d1652ae934ec8209478494657789b3a9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     }
   ]
 }
