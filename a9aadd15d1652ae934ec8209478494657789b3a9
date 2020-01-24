@@ -305,6 +305,30 @@
       "revId": "a9aadd15d1652ae934ec8209478494657789b3a9",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ce89d21_5daf8945",
+        "filename": "docs/release-notes.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 290
+      },
+      "writtenOn": "2020-01-24T17:37:05Z",
+      "side": 1,
+      "message": "I didn\u0027t read the build error closely enough .. I just need to add extra equal sign.. this is fixed now.",
+      "parentUuid": "c8c3683e_642ae96b",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 1
+      },
+      "revId": "a9aadd15d1652ae934ec8209478494657789b3a9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     }
   ]
 }
