@@ -1,0 +1,5 @@
+---
+pypi_project: acumos-model-runner
+python_version: '3.6'
+version: 0.2.3
+log_dir: python-model-runner-pypi-merge-master/1/
