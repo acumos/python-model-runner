@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edc7e4f1_874ec2ba",
+        "filename": "releases/pypi.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-29T22:40:33Z",
+      "side": 1,
+      "message": "try underscore instead of hyphen",
+      "range": {
+        "startLine": 2,
+        "startChar": 14,
+        "endLine": 2,
+        "endChar": 33
+      },
+      "revId": "e39529a82fbdb03de7e4e247530d32a27b1c83ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    }
+  ]
+}
