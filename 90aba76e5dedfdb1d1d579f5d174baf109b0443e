@@ -1,0 +1,8 @@
+Verified+1: Acumos Jobbuilder <acumos-jobbuilder@jenkins.acumos.org>
+Code-Review+1: Guy Jacobson <gj2418@att.com>
+Code-Review+2: Paul Triantafyllou <trianta@research.att.com>
+Submitted-by: Paul Triantafyllou <trianta@research.att.com>
+Submitted-at: Thu, 30 Jan 2020 21:09:21 +0000
+Reviewed-on: https://gerrit.acumos.org/r/c/python-model-runner/+/6347
+Project: python-model-runner
+Branch: refs/heads/master
