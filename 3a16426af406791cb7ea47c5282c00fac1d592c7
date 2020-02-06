@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "207d5989_d349b1e7",
+        "filename": "acumos_model_runner/data/templates/method.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2020-02-06T16:52:41Z",
+      "side": 1,
+      "message": "If a method uses a raw type, then it may not consume or produce application/json. This list needs to be made programmatically and this list needs to be a parameter.",
+      "revId": "3a16426af406791cb7ea47c5282c00fac1d592c7",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "adce8c8a_e1958749",
+        "filename": "acumos_model_runner/data/templates/method.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2020-02-06T16:52:41Z",
+      "side": 1,
+      "message": "We should not be hard-coding user-defined types. The raw type is in the model metadata, which should map to a media type.",
+      "revId": "3a16426af406791cb7ea47c5282c00fac1d592c7",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "66caf72c_f9f7c4cf",
+        "filename": "acumos_model_runner/data/templates/method.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2020-02-06T16:52:41Z",
+      "side": 1,
+      "message": "Please remote hard-coding",
+      "revId": "3a16426af406791cb7ea47c5282c00fac1d592c7",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5cc4946_d24a2bb7",
+        "filename": "acumos_model_runner/data/templates/method.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2020-02-06T16:52:41Z",
+      "side": 1,
+      "message": "Image would be bytes, not string - right? This would require a special format identifier in Swagger.",
+      "revId": "3a16426af406791cb7ea47c5282c00fac1d592c7",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28e79206_fcdc783f",
+        "filename": "acumos_model_runner/oas_gen.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2020-02-06T16:52:41Z",
+      "side": 1,
+      "message": "Why two string concatenations? Could just be + \u0027_media_type\u0027. My preference is using formatting, e.g. f\"{key}_media_type\".",
+      "revId": "3a16426af406791cb7ea47c5282c00fac1d592c7",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}
