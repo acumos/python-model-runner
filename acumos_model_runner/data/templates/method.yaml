@@ -7,18 +7,17 @@
       description: {{ method.description|tojson }}
       operationId: "methods.{{ method.name }}"
       consumes:
-        - application/json
-        - application/vnd.google.protobuf
+        - {{ method.input_media_type }}
       produces:
-        - application/json
-        - application/vnd.google.protobuf
+        - {{ method.output_media_type }}
       parameters:
         - in: body
           name: body
           description: "An object of type {{ method.input }}"
           required: true
-          schema:
+          schema:  
             $ref: "#/definitions/{{ method.input }}"
+          
       responses:
         200:
           description: "An object of type {{ method.output }}"
