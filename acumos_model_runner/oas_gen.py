@@ -84,6 +84,8 @@ def _format_method(name, method, major_minor):
     method_fmt = dict(name=name, **method)
     for key in ('input', 'output'):
         method_fmt[key] = method[key]
+        method_fmt[key] = _prefix_name(method[key]['name'])
+        method_fmt[key + '_media_type'] = method[key]['media_type'].pop()
         # 0.6.0 input,output are objects not just strings
         if major_minor == (0, 6):
             method_fmt[key] = method[key]
