@@ -84,6 +84,24 @@
       "revId": "3a16426af406791cb7ea47c5282c00fac1d592c7",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "161efe61_1bedb32a",
+        "filename": "acumos_model_runner/oas_gen.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 212
+      },
+      "writtenOn": "2020-03-11T14:59:43Z",
+      "side": 1,
+      "message": "I tried what you proposed but doesn\u0027t work, see the failed jobs. So I did \n\"{ }_media_type\".format(key)\" then it pass but we have now failures on test : pexpect.exceptions.EOF: End Of File (EOF). Exception style platform.\nE           \u003cpexpect.pty_spawn.spawn object at 0x7f6c3cd68898\u003e",
+      "parentUuid": "28e79206_fcdc783f",
+      "revId": "3a16426af406791cb7ea47c5282c00fac1d592c7",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     }
   ]
 }
