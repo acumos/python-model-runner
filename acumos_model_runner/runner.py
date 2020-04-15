@@ -25,15 +25,16 @@ from functools import partial
 from os.path import abspath, join as path_join
 
 from gunicorn.app.base import BaseApplication
-from connexion import App
+from connexion import App, __version__ as connexion_version
 from connexion.resolver import Resolver
-from swagger_ui_bundle import swagger_ui_3_path as swagger_ui_path
-from flask import redirect, Blueprint, render_template
+from flask import redirect
 from flask_cors import CORS
 from acumos.wrapped import load_model
 
 from acumos_model_runner.api import methods
 from acumos_model_runner.oas_gen import create_oas
+
+connexion_v1 = connexion_version.split(".")[0] == "1"
 
 
 def run_app_cli():
@@ -109,7 +110,9 @@ class StandaloneApplication(BaseApplication):
 
 def _build_app(model_dir, cors):
     '''Builds and returns a Flask app'''
-    connexion_app = App(__name__, specification_dir=model_dir, swagger_ui=False)
+
+    app_kwargs = dict(swagger_ui=False) if connexion_v1 else {}
+    connexion_app = App(__name__, specification_dir=model_dir, **app_kwargs)
     connexion_app.add_api('oas.yaml', resolver=_CustomResolver())
 
     flask_app = connexion_app.app
@@ -120,7 +123,8 @@ def _build_app(model_dir, cors):
     def redirect_ui():
         return redirect('/ui')
 
-    _add_swagger(flask_app)
+    if connexion_v1:
+        _add_swagger(flask_app)
     _apply_cors(flask_app, cors)
 
     return flask_app
@@ -137,15 +141,19 @@ class _CustomResolver(Resolver):
             return super().resolve_function_from_operation_id(operation_id)
 
 
-def _add_swagger(app):
-    '''Manually adds a Swagger v3 UI to the Flask app (until connexion 2.0 is released)'''
-    swagger_bp = Blueprint('swagger_ui', __name__, static_url_path='', static_folder=swagger_ui_path, template_folder=swagger_ui_path)
+if connexion_v1:
+    from flask import Blueprint, render_template
+    from swagger_ui_bundle import swagger_ui_3_path as swagger_ui_path
 
-    @swagger_bp.route('/')
-    def swagger_ui_index():
-        return render_template('index.j2', openapi_spec_url='/swagger.json')
+    def _add_swagger(app):
+        '''Manually adds a Swagger v3 UI to the Flask app (until connexion 2.0 is released)'''
+        swagger_bp = Blueprint('swagger_ui', __name__, static_url_path='', static_folder=swagger_ui_path, template_folder=swagger_ui_path)
 
-    app.register_blueprint(swagger_bp, url_prefix='/ui')
+        @swagger_bp.route('/')
+        def swagger_ui_index():
+            return render_template('index.j2', openapi_spec_url='/swagger.json')
+
+        app.register_blueprint(swagger_bp, url_prefix='/ui')
 
 
 def _apply_cors(app, cors):
