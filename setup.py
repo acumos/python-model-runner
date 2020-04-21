@@ -58,6 +58,7 @@ setup(
     install_requires=['acumos>=0.5.3',
                       'lark-parser<0.8',
                       'connexion<2.0.0',
+                      'werkzeug<1.0.0',
                       'gunicorn',
                       'pyyaml',
                       'jinja2',

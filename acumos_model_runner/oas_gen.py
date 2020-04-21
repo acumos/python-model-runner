@@ -136,7 +136,12 @@ def _find_message_definitions(message, refs, prefix):
 
     properties = {field.name: _define_field(field, refs, scope) for field in message.fields}
 
-    def_obj = {'type': 'object', 'properties': properties, 'required': sorted(properties.keys())}
+    def_obj = {'type': 'object'}
+    if properties:
+        # Swagger 2.0 spec REQUIRES a non-empty list of required fields
+        # only add properties and required if there are fields.
+        def_obj['required'] = sorted(properties.keys())
+        def_obj['properties'] = properties
     def_name = ".".join(scope)
     yield def_name, def_obj
 

@@ -46,7 +46,8 @@ def _run_model(model, model_name='test-model', options=None):
             yield runner
 
 
-def _create_model():
+@pytest.fixture(scope="session")
+def model():
     '''Returns a simple test model'''
     def add(x: int, y: int) -> int:
         '''Adds two numbers'''
@@ -55,13 +56,15 @@ def _create_model():
     def count(strings: List[str]) -> Dict[str, int]:
         return Counter(strings)
 
-    model = Model(add=add, count=count)
+    def empty() -> int:
+        return 1
+
+    model = Model(add=add, count=count, empty=empty)
     return model
 
 
-def test_runner():
+def test_runner(model):
     '''Tests model runner basic usage'''
-    model = _create_model()
 
     with _run_model(model) as runner:
         api = runner.api
@@ -102,6 +105,19 @@ def test_runner():
         assert dict(resp_proto.value.items()) == count_output
 
         # =============================================================================
+        # no params test
+        # =============================================================================
+
+        empty_input = {}
+        empty_output = 1
+
+        resp_json = api.method('empty', json=empty_input)
+        assert int(resp_json['value']) == empty_output
+
+        resp_proto = api.method('empty', proto=empty_input)
+        assert resp_proto.value == empty_output
+
+        # =============================================================================
         # headers test
         # =============================================================================
 
@@ -116,9 +132,8 @@ def test_runner():
             assert err.response.status_code == 415
 
 
-def test_cors():
+def test_cors(model):
     '''Tests model runner CORS'''
-    model = _create_model()
 
     # test CORS is disabled by default
     with _run_model(model) as runner:
