@@ -21,6 +21,8 @@ Provides model runner API implementations
 '''
 from functools import partial
 
+
+from acumos.wrapped import WrappedFunction
 from flask import current_app, send_from_directory, request, abort, Response
 from google.protobuf.message import DecodeError
 from google.protobuf.json_format import ParseError
@@ -28,37 +30,60 @@ from google.protobuf.json_format import ParseError
 
 _PROTO = 'application/vnd.google.protobuf'
 _JSON = 'application/json'
-_VALID_MEDIA = {_PROTO, _JSON}
+_TEXT = 'text/plain'
+_OCTET_STREAM = 'application/octet-stream'
+
+_STRUCTURED_MEDIA = {_PROTO, _JSON}
+_RAW_MEDIA = {_OCTET_STREAM, _TEXT}
 
 
-def methods(method_name):
+def methods(method_name: str):
     '''Generic handler for model methods'''
-    content_type = _get_header('Content-Type')
-    accept = _get_header('Accept')
+    content_type, accept = _verify_content_types(method_name)
 
     data = request.data
-    method = current_app.model.methods[method_name]
+    method: WrappedFunction = current_app.model.methods[method_name]
 
-    try:
-        wrapped_resp = method.from_pb_bytes(data) if content_type == _PROTO else method.from_json(data)
-    except DecodeError as err:
-        abort(Response("Could not decode input protobuf message: {}".format(err), 400))
-    except ParseError as err:
-        abort(Response("Could not parse input JSON message: {}".format(err), 400))
-    except Exception as err:
-        abort(Response("Could not invoke method due to runtime error: {}".format(err), 400))
+    if content_type in _STRUCTURED_MEDIA:
+        try:
+            wrapped_resp = method.from_pb_bytes(data) if content_type == _PROTO else method.from_json(data)
+        except DecodeError as err:
+            abort(Response("Could not decode input protobuf message: {}".format(err), 400))
+        except ParseError as err:
+            abort(Response("Could not parse input JSON message: {}".format(err), 400))
+        except Exception as err:
+            abort(Response("Could not invoke method due to runtime error: {}".format(err), 400))
+    elif content_type in _RAW_MEDIA:
+        wrapped_resp = method.from_raw(raw_in=data)
+    else:
+        abort(Response("Could not invoke method, unable to handle Content-Type header: {}".format(content_type), 400))
 
-    resp_data = wrapped_resp.as_pb_bytes() if accept == _PROTO else wrapped_resp.as_json()
+    if accept == _PROTO:
+        resp_data = wrapped_resp.as_pb_bytes()
+    elif accept == _JSON:
+        resp_data = wrapped_resp.as_json()
+    elif accept in _RAW_MEDIA:
+        resp_data = wrapped_resp.as_raw()
+    else:
+        abort(Response("Could not format result, unable to handle Accept header: {}".format(accept), 400))
+
     return Response(resp_data, status=200, content_type=accept)
 
 
-def _get_header(name):
-    '''Returns a given request header'''
+def _verify_content_types(method_name):
+    """Checks and return content-type and accept header"""
+    consumes = current_app.methods_info[method_name]['consumes']
+    produces = current_app.methods_info[method_name]['produces']
+    return _get_header('Content-Type', consumes), _get_header('Accept', produces)
+
+
+def _get_header(name: str, accepted_values: list):
+    '''Returns a given request header and make sure its value is acceptable'''
     header = request.headers.get(name)
     if header is None:
         abort(Response("Header '{}' is required".format(name), 400))
-    if header not in _VALID_MEDIA:
-        abort(Response("Header '{}' must be one of {}".format(name, _VALID_MEDIA), 415))
+    if header not in accepted_values:
+        abort(Response("Header '{}' must be one of {}".format(name, accepted_values), 415))
     return header
 
 
