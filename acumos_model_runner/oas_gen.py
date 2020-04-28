@@ -26,6 +26,7 @@ from jinja2 import Environment, FileSystemLoader
 
 from acumos_model_runner.proto_parser import Message, RepeatedField, MapField, Enum, parse_proto
 from acumos_model_runner.utils import data_path
+from acumos_model_runner.api import _PROTO, _JSON, _OCTET_STREAM, _TEXT
 
 
 class TemplateError(Exception):
@@ -58,7 +59,8 @@ _PROTO_OAS_MAP = {
 def create_oas(metadata, protobuf):
     '''Returns an OAS YAML string'''
     top_level = parse_proto(protobuf)
-    defs = _create_definitions(top_level)
+    protobuf_defs = _create_definitions(top_level)
+    raw_defs = _create_raw_types_definitions(metadata["methods"])
     schema = metadata["schema"]
     version = schema[schema.index(":") + 1:]
     current_version = tuple(map(int, version.split('.')))
@@ -71,7 +73,9 @@ def create_oas(metadata, protobuf):
         # older templates prior to meta model schema version 0.6
         version_dir = ''
 
-    defs_yaml = yaml.dump(defs, default_flow_style=False)
+    all_defs = {**protobuf_defs, **raw_defs}
+
+    defs_yaml = yaml.dump(all_defs, default_flow_style=False)
     methods = [_format_method(name, method, major_minor) for name, method in metadata['methods'].items()]
     template_path = data_path('templates', version_dir)
     env = Environment(loader=FileSystemLoader(template_path), trim_blocks=True)
@@ -92,6 +96,10 @@ def _format_method(name, method, major_minor):
             # older method when input, output were strings
             method_fmt[key] = _prefix_name(method[key])
 
+        if _PROTO in method_fmt[key]["media_type"]:
+            # If the method accepts/produces protobuf, then it also accepts/produces json
+            method_fmt[key]["media_type"] = [_JSON, _PROTO]
+
     return method_fmt
 
 
@@ -101,6 +109,47 @@ def _create_definitions(top_level):
     defs = {name: definition for item in top_level for name, definition in _find_definitions(item, refs)}
     defs_prefixed = {_prefix_name(key): val for key, val in defs.items()}
     return defs_prefixed
+
+
+def _create_raw_types_definitions(methods):
+    '''Returns OAS definitions for all raw type definitions'''
+    raw_types = {}
+    for method in methods.values():
+        for key in 'input', 'output':
+            type_def = method[key]
+            type_name = _prefix_name(type_def['name'])
+            media_type = type_def['media_type'][0]
+
+            if type_name in raw_types:
+                # type already registered
+                continue
+
+            if media_type == _PROTO:
+                # protobuf types are handled in _create_definitions
+                continue
+
+            if media_type == _JSON:
+                _def = {"type": "object"}
+
+            elif media_type == _TEXT:
+                _def = {"type": "string"}
+
+            elif media_type == _OCTET_STREAM:
+                _def = {"type": "string", "format": "binary"}
+
+            else:
+                raise TemplateError(f"Unknown media type {media_type}")
+
+            _def["description"] = type_def['description'] or ""
+
+            metadata = type_def.get('metadata', None)
+            if metadata:
+                # user-defined fields must start with 'x-'
+                _def["x-metadata"] = metadata
+
+            raw_types[type_name] = _def
+
+    return raw_types
 
 
 def _find_refs(item, root=()):

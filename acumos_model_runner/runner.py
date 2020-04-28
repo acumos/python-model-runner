@@ -27,8 +27,7 @@ from os.path import abspath, join as path_join
 from gunicorn.app.base import BaseApplication
 from connexion import App
 from connexion.resolver import Resolver
-from swagger_ui_bundle import swagger_ui_3_path as swagger_ui_path
-from flask import redirect, Blueprint, render_template
+from flask import redirect
 from flask_cors import CORS
 from acumos.wrapped import load_model
 
@@ -109,18 +108,18 @@ class StandaloneApplication(BaseApplication):
 
 def _build_app(model_dir, cors):
     '''Builds and returns a Flask app'''
-    connexion_app = App(__name__, specification_dir=model_dir, swagger_ui=False)
+    connexion_app = App(__name__, specification_dir=model_dir)
     connexion_app.add_api('oas.yaml', resolver=_CustomResolver())
 
     flask_app = connexion_app.app
     flask_app.model = load_model(model_dir)
     flask_app.model_dir = model_dir
+    flask_app.methods_info = _read_methods(model_dir)
 
     @flask_app.route('/')
     def redirect_ui():
         return redirect('/ui')
 
-    _add_swagger(flask_app)
     _apply_cors(flask_app, cors)
 
     return flask_app
@@ -137,19 +136,21 @@ class _CustomResolver(Resolver):
             return super().resolve_function_from_operation_id(operation_id)
 
 
-def _add_swagger(app):
-    '''Manually adds a Swagger v3 UI to the Flask app (until connexion 2.0 is released)'''
-    swagger_bp = Blueprint('swagger_ui', __name__, static_url_path='', static_folder=swagger_ui_path, template_folder=swagger_ui_path)
-
-    @swagger_bp.route('/')
-    def swagger_ui_index():
-        return render_template('index.j2', openapi_spec_url='/swagger.json')
-
-    app.register_blueprint(swagger_bp, url_prefix='/ui')
-
-
 def _apply_cors(app, cors):
     '''Configures a Flask app with CORS'''
     if isinstance(cors, str):
         origins = cors if cors == '*' else cors.split(',')
         CORS(app, origins=origins)
+
+
+def _read_methods(model_dir: str):
+    '''Gets methods metadata from the model dir'''
+    import os
+    import yaml
+    with open(os.path.join(model_dir, 'oas.yaml'), "rt") as f:
+        oas_dict = yaml.load(f)
+    return {
+        path.split('/')[-1]: method_info['post']
+        for (path, method_info) in oas_dict["paths"].items()
+        if path.startswith('/model/methods/')
+    }

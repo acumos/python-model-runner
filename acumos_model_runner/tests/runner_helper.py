@@ -29,7 +29,7 @@ import requests
 from requests import ConnectionError
 from acumos.wrapped import load_model
 
-from acumos_model_runner.api import _PROTO, _JSON
+from acumos_model_runner.api import _PROTO, _JSON, _OCTET_STREAM, _TEXT
 
 _EXPECT_RE = r'^.*(Booting worker with pid).*$'
 
@@ -50,13 +50,25 @@ class Api(object):
         else:
             raise Exception('Must provide data for either json or protobuf')
 
-    def _post_json(self, method_name, data, headers):
+    def _post_octet_stream(self, method_name: str, data: bytes, accept: str = _OCTET_STREAM):
+        '''Invokes a model method with binary data'''
+        headers = {'Content-Type': _OCTET_STREAM, 'Accept': accept}
+        resp_data = self._post(method_name, data, headers)
+        return resp_data
+
+    def _post_text_stream(self, method_name: str, data: str, accept: str = _TEXT):
+        '''Invokes a model method with binary data'''
+        headers = {'Content-Type': _TEXT, 'Accept': accept}
+        resp_data = self._post(method_name, data, headers)
+        return resp_data
+
+    def _post_json(self, method_name, data, headers=None):
         '''Invokes a model method with json data'''
         headers = {'Content-Type': _JSON, 'Accept': _JSON} if headers is None else headers
         resp_data = self._post(method_name, json.dumps(data), headers)
         return json.loads(resp_data.decode())
 
-    def _post_proto(self, method_name, data, headers):
+    def _post_proto(self, method_name, data, headers=None):
         '''Invokes a model method with protobuf data'''
         method = self._model.methods[method_name]
         pb_input = method.pb_input_type(**data)

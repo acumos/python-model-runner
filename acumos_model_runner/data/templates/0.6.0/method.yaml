@@ -7,12 +7,8 @@
       summary: "Invokes the model method '{{ method.name }}'"
       description: {{ method.description|tojson }}
       operationId: "methods.{{ method.name }}"
-      consumes:
-        - application/json
-        - application/vnd.google.protobuf
-      produces:
-        - application/json
-        - application/vnd.google.protobuf
+      consumes: {{ method.input.media_type|tojson }}
+      produces: {{ method.output.media_type|tojson }}
       parameters:
         - in: body
           name: body

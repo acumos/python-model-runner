@@ -27,7 +27,7 @@ from collections import Counter
 import pytest
 import requests
 from acumos.session import AcumosSession
-from acumos.modeling import Model, List, Dict
+from acumos.modeling import Model, List, Dict, new_type
 
 from acumos_model_runner.api import _JSON
 
@@ -35,13 +35,20 @@ from runner_helper import ModelRunner
 
 
 @contextlib.contextmanager
-def _run_model(model, model_name='test-model', options=None):
-    '''Dumps and runs a model, and returns an api object'''
+def _dumped_model(model: Model, model_name: str = 'test-model') -> str:
+    """Dumps a model an returns its path"""
     with TemporaryDirectory() as dump_dir:
         session = AcumosSession()
         session.dump(model, model_name, dump_dir)
 
         model_dir = os.path.join(dump_dir, model_name)
+        yield model_dir
+
+
+@contextlib.contextmanager
+def _run_model(model, model_name='test-model', options=None):
+    '''Dumps and runs a model, and returns an api object'''
+    with _dumped_model(model=model, model_name=model_name) as model_dir:
         with ModelRunner(model_dir, options=options) as runner:
             yield runner
 
@@ -59,8 +66,52 @@ def model():
     def empty() -> int:
         return 1
 
-    model = Model(add=add, count=count, empty=empty)
+    Image = new_type(raw_type=bytes, name="Image", metadata={"test": "this is a test"})
+
+    def rotate_image(img: Image) -> Image:
+        return img
+
+    Dictionary = new_type(raw_type=dict, name="Dictionary", metadata={"test": "this is a test"})
+
+    def handle_dict(_dict: Dictionary) -> Dictionary:
+        return _dict
+
+    model = Model(add=add, count=count, empty=empty, rotate_image=rotate_image, handle_dict=handle_dict)
     return model
+
+
+def test_create_oas(model):
+    from yaml import load
+    from acumos_model_runner.runner import _write_oas
+    with _dumped_model(model) as model_dir:
+        _write_oas(model_dir)
+        with open(os.path.join(model_dir, "oas.yaml"), "r") as oas_file:
+            oas = load(oas_file)
+
+    add_definition = oas["paths"]["/model/methods/add"]["post"]
+    assert add_definition["parameters"][0].items() >= {"in": "body", "schema": {"$ref": '#/definitions/Model.AddIn'}}.items()
+    assert add_definition["responses"][200].items() >= {"schema": {"$ref": '#/definitions/Model.AddOut'}}.items()
+    assert add_definition["consumes"] == add_definition["produces"] == ['application/json', 'application/vnd.google.protobuf']
+
+    count_definition = oas["paths"]["/model/methods/count"]["post"]
+    assert count_definition["parameters"][0].items() >= {"in": "body", "schema": {"$ref": '#/definitions/Model.CountIn'}}.items()
+    assert count_definition["responses"][200].items() >= {"schema": {"$ref": '#/definitions/Model.CountOut'}}.items()
+    assert count_definition["consumes"] == count_definition["produces"] == ['application/json', 'application/vnd.google.protobuf']
+
+    empty_definition = oas["paths"]["/model/methods/empty"]["post"]
+    assert empty_definition["parameters"][0].items() >= {"in": "body", "schema": {"$ref": '#/definitions/Model.Empty'}}.items()
+    assert empty_definition["responses"][200].items() >= {"schema": {"$ref": '#/definitions/Model.EmptyOut'}}.items()
+    assert empty_definition["consumes"] == empty_definition["produces"] == ['application/json', 'application/vnd.google.protobuf']
+
+    rotate_image_definition = oas["paths"]["/model/methods/rotate_image"]["post"]
+    assert rotate_image_definition["parameters"][0].items() >= {"in": "body", "schema": {"$ref": '#/definitions/Model.Image'}}.items()
+    assert rotate_image_definition["responses"][200].items() >= {"schema": {"$ref": '#/definitions/Model.Image'}}.items()
+    assert rotate_image_definition["consumes"] == rotate_image_definition["produces"] == ['application/octet-stream']
+
+    handle_dict_definition = oas["paths"]["/model/methods/handle_dict"]["post"]
+    assert handle_dict_definition["parameters"][0].items() >= {"in": "body", "schema": {"$ref": '#/definitions/Model.Dictionary'}}.items()
+    assert handle_dict_definition["responses"][200].items() >= {"schema": {"$ref": '#/definitions/Model.Dictionary'}}.items()
+    assert handle_dict_definition["consumes"] == handle_dict_definition["produces"] == ['application/json']
 
 
 def test_runner(model):
@@ -116,6 +167,27 @@ def test_runner(model):
 
         resp_proto = api.method('empty', proto=empty_input)
         assert resp_proto.value == empty_output
+
+        # =============================================================================
+        # raw test image
+        # =============================================================================
+
+        with open(os.path.join(os.path.dirname(__file__), "data", "acumos_logo.png"), "rb") as f:
+            raw_image_input = f.read()
+        raw_image_output = raw_image_input
+
+        resp_raw_image = api._post_octet_stream('rotate_image', data=raw_image_input)
+        assert resp_raw_image == raw_image_output
+
+        # =============================================================================
+        # raw test dict
+        # =============================================================================
+
+        raw_dict_input = dict(a=1, b=2)
+        raw_dict_output = raw_dict_input
+
+        resp_raw_dict = api._post_json('handle_dict', data=raw_dict_input)
+        assert resp_raw_dict == raw_dict_output
 
         # =============================================================================
         # headers test
