@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e58e4af2_4d374f03",
+        "filename": "acumos_model_runner/api.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 391
+      },
+      "writtenOn": "2020-04-30T19:27:18Z",
+      "side": 1,
+      "message": "I think we are, the model schema allows going to and from any of \"application/vnd.google.protobuf\",  \"application/octet-stream\",  \"application/json\", \"text/plain\".",
+      "parentUuid": "092d7a2d_c7d785bc",
+      "revId": "1beb12638cd198b20d20f68a31715bbfe8354ddb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2adc035_8ab7668b",
         "filename": "acumos_model_runner/oas_gen.py",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2020-04-30T16:18:00Z",
       "side": 1,
       "message": "what change aligns to this assumption?",
+      "revId": "1beb12638cd198b20d20f68a31715bbfe8354ddb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea0d5d7f_14c0ba91",
+        "filename": "acumos_model_runner/oas_gen.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 391
+      },
+      "writtenOn": "2020-04-30T19:27:18Z",
+      "side": 1,
+      "message": "In the model schema (not the swagger one), the media type is always protobuf for structured data  (at least in Python). the oas.yanl template used json + protobuf by default for consumes/produces (since only structured data was supported)\n\nThe consumes/produces is no longer hard-coded in the oas.yaml template, we use the media type field from the function\u0027s input and output.\n\nNow, if a function accepts or consumes protobuf, we just add JSON as a valid input/output media type to here instead of in the template.",
+      "parentUuid": "e2adc035_8ab7668b",
       "revId": "1beb12638cd198b20d20f68a31715bbfe8354ddb",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6e3cd455_54e7952d",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 391
+      },
+      "writtenOn": "2020-04-30T19:27:18Z",
+      "side": 1,
+      "message": "It\u0027s done by the library automatically now. (since we drop the support for python 3.5, we can upgrade connexion\u0027s version)",
+      "parentUuid": "ab8b45c6_03acffe2",
+      "revId": "1beb12638cd198b20d20f68a31715bbfe8354ddb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec4c5653_fc043c7b",
         "filename": "setup.py",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2020-04-30T16:18:00Z",
       "side": 1,
       "message": "We also added 3.7 compatibility, right?",
+      "revId": "1beb12638cd198b20d20f68a31715bbfe8354ddb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e80f339a_6084193f",
+        "filename": "setup.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 391
+      },
+      "writtenOn": "2020-04-30T19:27:18Z",
+      "side": 1,
+      "message": "acumos 0.9.5 add 3.7 compatibility, but it has not been release yet ( we could wait for it and make it the minimum required version )\n\nI\u0027m not totally comfortable with marking a python version as compatible with no CI tests to ensure it, once 0.9.5 is released, I\u0027ll gladly add tox tests and the version marker in setup.py.",
+      "parentUuid": "ec4c5653_fc043c7b",
       "revId": "1beb12638cd198b20d20f68a31715bbfe8354ddb",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
