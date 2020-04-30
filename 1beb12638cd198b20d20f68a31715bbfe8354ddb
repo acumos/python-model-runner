@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "092d7a2d_c7d785bc",
+        "filename": "acumos_model_runner/api.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2020-04-30T16:18:00Z",
+      "side": 1,
+      "message": "Make sure we\u0027re still in sync with the schema -- https://github.com/acumos/model-schema/blob/master/schema-0.6.0.json#L244",
+      "revId": "1beb12638cd198b20d20f68a31715bbfe8354ddb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2adc035_8ab7668b",
+        "filename": "acumos_model_runner/oas_gen.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2020-04-30T16:18:00Z",
+      "side": 1,
+      "message": "what change aligns to this assumption?",
+      "revId": "1beb12638cd198b20d20f68a31715bbfe8354ddb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab8b45c6_03acffe2",
+        "filename": "acumos_model_runner/runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2020-04-30T16:18:00Z",
+      "side": 1,
+      "message": "So we don\u0027t output a swagger interface now or is it done via the library automatically?",
+      "revId": "1beb12638cd198b20d20f68a31715bbfe8354ddb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec4c5653_fc043c7b",
+        "filename": "setup.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2020-04-30T16:18:00Z",
+      "side": 1,
+      "message": "We also added 3.7 compatibility, right?",
+      "revId": "1beb12638cd198b20d20f68a31715bbfe8354ddb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    }
+  ]
+}
