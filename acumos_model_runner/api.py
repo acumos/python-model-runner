@@ -95,3 +95,4 @@ def artifacts(filename, mimetype=None):
 
 metadata = partial(artifacts, filename='metadata.json', mimetype=_JSON)
 protobuf = partial(artifacts, filename='model.proto', mimetype='text/plain')
+license = partial(artifacts, filename=i'license.json', mimetype=_JSON)
