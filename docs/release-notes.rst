@@ -25,7 +25,7 @@ v0.2.24, 15 May 2020
 ====================
 - Fix OpenAPI spec generation for empty inputs `ACUMOS-4010 <https://jira.acumos.org/browse/ACUMOS-4010>`_
 - Allow the model runner to use raw data types `ACUMOS-3956 <https://jira.acumos.org/browse/ACUMOS-3956>`_
-- Add license at the end of api.py https://gerrit.acumos.org/r/c/python-model-runner/+/7915
+- Receive the licence profile from the running micro-service `ACUMOS-3161 <https://jira.acumos.org/browse/ACUMOS-3161>`_
 
 v0.2.3, 23 January 2020
 =======================
