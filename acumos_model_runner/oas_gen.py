@@ -59,19 +59,23 @@ _PROTO_OAS_MAP = {
 def create_oas(metadata, protobuf):
     '''Returns an OAS YAML string'''
     top_level = parse_proto(protobuf)
-    protobuf_defs = _create_definitions(top_level)
-    raw_defs = _create_raw_types_definitions(metadata["methods"])
     schema = metadata["schema"]
     version = schema[schema.index(":") + 1:]
     current_version = tuple(map(int, version.split('.')))
     version_dir = version
     major_minor = current_version[:2]
+    protobuf_defs = _create_definitions(top_level)
+
+    if major_minor >= (0, 6):
+        raw_defs = _create_raw_types_definitions(metadata["methods"])
+    else:
+        raw_defs = {}
 
     if major_minor > (0, 6):
         raise Exception('Latest supported schema is 0.6.*')
     elif major_minor < (0, 6):
-        # older templates prior to meta model schema version 0.6
-        version_dir = ''
+        # older schema are converted to 0.6.0
+        version_dir = '0.6.0'
 
     all_defs = {**protobuf_defs, **raw_defs}
 
@@ -88,17 +92,17 @@ def _format_method(name, method, major_minor):
     method_fmt = dict(name=name, **method)
     for key in ('input', 'output'):
         method_fmt[key] = method[key]
-        # 0.6.0 input,output are objects not just strings
+        # 0.6.0 input, output are objects not just strings
         if major_minor == (0, 6):
             method_fmt[key] = method[key]
             method_fmt[key]['name'] = _prefix_name(method[key]['name'])
+            if _PROTO in method_fmt[key]["media_type"]:
+                # If the method accepts/produces protobuf, then it also accepts/produces json
+                method_fmt[key]["media_type"] = [_JSON, _PROTO]
         else:
             # older method when input, output were strings
-            method_fmt[key] = _prefix_name(method[key])
-
-        if _PROTO in method_fmt[key]["media_type"]:
-            # If the method accepts/produces protobuf, then it also accepts/produces json
-            method_fmt[key]["media_type"] = [_JSON, _PROTO]
+            # convert to 0.6.0 format
+            method_fmt[key] = {"name": _prefix_name(method[key]), "media_type": [_JSON, _PROTO]}
 
     return method_fmt
 
