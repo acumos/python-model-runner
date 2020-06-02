@@ -154,3 +154,8 @@ def _read_methods(model_dir: str):
         for (path, method_info) in oas_dict["paths"].items()
         if path.startswith('/model/methods/')
     }
+
+
+if __name__ == '__main__':
+    # allow direct run of the cli app for debugging
+    run_app_cli()

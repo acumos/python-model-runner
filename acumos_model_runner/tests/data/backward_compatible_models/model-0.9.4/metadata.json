@@ -1,0 +1,34 @@
+{
+  "schema": "acumos.schema.model:0.6.0", "runtime": {
+  "name": "python", "version": "3.6.9", "dependencies": {
+    "pip": {
+      "indexes": [], "requirements": [
+        {"name": "acumos", "version": "0.9.4"},
+        {"name": "dill", "version": "0.3.1.1"}
+      ]
+    }, "conda": {"channels": [], "requirements": []}
+  }
+}, "name": "example-model", "methods": {
+  "add": {
+    "input": {
+      "name": "AddIn", "media_type": [
+        "application/vnd.google.protobuf"
+      ], "metadata": {}, "description": ""
+    }, "output": {
+      "name": "AddOut", "media_type": [
+        "application/vnd.google.protobuf"
+      ], "metadata": {}, "description": ""
+    }, "description": "Adds two numbers"
+  }, "count": {
+    "input": {
+      "name": "CountIn", "media_type": [
+        "application/vnd.google.protobuf"
+      ], "metadata": {}, "description": ""
+    }, "output": {
+      "name": "CountOut", "media_type": [
+        "application/vnd.google.protobuf"
+      ], "metadata": {}, "description": ""
+    }, "description": "Counts the occurrences of words in `strings`"
+  }
+}
+}
