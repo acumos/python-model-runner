@@ -1,0 +1,145 @@
+swagger: "2.0"
+info:
+  description: "Provides an HTTP API for the Acumos model 'example-model'"
+  version: 0.1.0
+  title: "example-model"
+  termsOfService: "https://lfprojects.org/policies/terms-of-use/"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+tags:
+  - name: "methods"
+    description: "Access model methods"
+  - name: "artifacts"
+    description: "Access model artifacts"
+schemes:
+  - "http"
+paths:
+  /model/artifacts/metadata:
+    get:
+      tags:
+        - "artifacts"
+      summary: "Returns the Acumos model metadata JSON"
+      operationId: "acumos_model_runner.api.metadata"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: Success
+      externalDocs:
+        description: "See our model metadata schema repository for more information"
+        url: "https://gerrit.acumos.org/r/gitweb?p=model-schema.git;a=summary"
+  /model/artifacts/protobuf:
+    get:
+      tags:
+        - "artifacts"
+      summary: "Returns the Acumos model protobuf data format specification"
+      operationId: "acumos_model_runner.api.protobuf"
+      produces:
+        - "text/plain"
+      responses:
+        "200":
+          description: Success
+      externalDocs:
+        description: "See the protobuf language guide for more information"
+        url: "https://developers.google.com/protocol-buffers/docs/proto3"
+
+  /model/methods/add:
+    post:
+      tags:
+        - methods
+      summary: "Invokes the model method 'add'"
+      description: "Adds two numbers"
+      operationId: "methods.add"
+      consumes: ["application/json", "application/vnd.google.protobuf"]
+      produces: ["application/json", "application/vnd.google.protobuf"]
+      parameters:
+        - in: body
+          name: body
+          description: "An object of type Model.AddIn  "
+          required: true
+          schema:
+            $ref: "#/definitions/Model.AddIn"
+      responses:
+        200:
+          description: "An object of type Model.AddOut   "
+          schema:
+            $ref: "#/definitions/Model.AddOut"
+        400:
+          description: "Invalid request"
+        415:
+          description: "Invalid media type"
+
+  /model/methods/count:
+    post:
+      tags:
+        - methods
+      summary: "Invokes the model method 'count'"
+      description: "Counts the occurrences of words in `strings`"
+      operationId: "methods.count"
+      consumes: ["application/json", "application/vnd.google.protobuf"]
+      produces: ["application/json", "application/vnd.google.protobuf"]
+      parameters:
+        - in: body
+          name: body
+          description: "An object of type Model.CountIn  "
+          required: true
+          schema:
+            $ref: "#/definitions/Model.CountIn"
+      responses:
+        200:
+          description: "An object of type Model.CountOut   "
+          schema:
+            $ref: "#/definitions/Model.CountOut"
+        400:
+          description: "Invalid request"
+        415:
+          description: "Invalid media type"
+definitions:
+  Model.AddIn:
+    properties:
+      x:
+        description: 'Note: 64-bit integers are string-encoded when using application/json'
+        format: int64
+        type: integer
+      y:
+        description: 'Note: 64-bit integers are string-encoded when using application/json'
+        format: int64
+        type: integer
+    required:
+    - x
+    - y
+    type: object
+  Model.AddOut:
+    properties:
+      value:
+        description: 'Note: 64-bit integers are string-encoded when using application/json'
+        format: int64
+        type: integer
+    required:
+    - value
+    type: object
+  Model.CountIn:
+    properties:
+      strings:
+        items:
+          type: string
+        type: array
+    required:
+    - strings
+    type: object
+  Model.CountOut:
+    properties:
+      value:
+        additionalProperties:
+          description: 'Note: 64-bit integers are string-encoded when using application/json'
+          format: int64
+          type: integer
+        type: object
+    required:
+    - value
+    type: object
+
+externalDocs:
+  description: "Find out more about Acumos"
+  url: "https://www.acumos.org/"
