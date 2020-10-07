@@ -19,6 +19,7 @@
 '''
 Provides tests for the model runner
 '''
+import json
 import os
 import contextlib
 from tempfile import TemporaryDirectory
@@ -29,7 +30,7 @@ import requests
 from acumos.session import AcumosSession
 from acumos.modeling import Model, List, Dict, new_type
 
-from acumos_model_runner.api import _JSON
+from acumos_model_runner.api import _JSON, _PROTO, _TEXT, _OCTET_STREAM
 
 from runner_helper import ModelRunner
 
@@ -76,132 +77,232 @@ def model():
     def handle_dict(_dict: Dictionary) -> Dictionary:
         return _dict
 
-    model = Model(add=add, count=count, empty=empty, rotate_image=rotate_image, handle_dict=handle_dict)
+    Text = new_type(str, 'Text')
+
+    def count_words(text: Text) -> int:
+        '''Counts the number of words in the text'''
+        return len(text.split(u' '))
+
+    def create_words(n: int) -> Text:
+        return " ".join(["éééé"] * n)
+
+    model = Model(add=add, count=count, empty=empty, rotate_image=rotate_image, handle_dict=handle_dict, count_words=count_words, create_words=create_words)
     return model
 
 
-def test_create_oas(model):
+@pytest.fixture(scope="session")
+def model_oas(model):
     from yaml import load
     from acumos_model_runner.runner import _write_oas
     with _dumped_model(model) as model_dir:
         _write_oas(model_dir)
         with open(os.path.join(model_dir, "oas.yaml"), "r") as oas_file:
             oas = load(oas_file)
+    return oas
 
-    add_definition = oas["paths"]["/model/methods/add"]["post"]
+
+def test_create_oas_add(model_oas):
+    add_definition = model_oas["paths"]["/model/methods/add"]["post"]
     assert add_definition["parameters"][0].items() >= {"in": "body", "schema": {"$ref": '#/definitions/Model.AddIn'}}.items()
     assert add_definition["responses"][200].items() >= {"schema": {"$ref": '#/definitions/Model.AddOut'}}.items()
-    assert add_definition["consumes"] == add_definition["produces"] == ['application/json', 'application/vnd.google.protobuf']
+    assert add_definition["consumes"] == add_definition["produces"] == [_JSON, _PROTO]
 
-    count_definition = oas["paths"]["/model/methods/count"]["post"]
+
+def test_create_oas_count(model_oas):
+    count_definition = model_oas["paths"]["/model/methods/count"]["post"]
     assert count_definition["parameters"][0].items() >= {"in": "body", "schema": {"$ref": '#/definitions/Model.CountIn'}}.items()
     assert count_definition["responses"][200].items() >= {"schema": {"$ref": '#/definitions/Model.CountOut'}}.items()
-    assert count_definition["consumes"] == count_definition["produces"] == ['application/json', 'application/vnd.google.protobuf']
+    assert count_definition["consumes"] == count_definition["produces"] == [_JSON, _PROTO]
 
-    empty_definition = oas["paths"]["/model/methods/empty"]["post"]
+
+def test_create_oas_empty(model_oas):
+    empty_definition = model_oas["paths"]["/model/methods/empty"]["post"]
     assert empty_definition["parameters"][0].items() >= {"in": "body", "schema": {"$ref": '#/definitions/Model.Empty'}}.items()
     assert empty_definition["responses"][200].items() >= {"schema": {"$ref": '#/definitions/Model.EmptyOut'}}.items()
-    assert empty_definition["consumes"] == empty_definition["produces"] == ['application/json', 'application/vnd.google.protobuf']
+    assert empty_definition["consumes"] == empty_definition["produces"] == [_JSON, _PROTO]
 
-    rotate_image_definition = oas["paths"]["/model/methods/rotate_image"]["post"]
+
+def test_create_oas_image(model_oas):
+    rotate_image_definition = model_oas["paths"]["/model/methods/rotate_image"]["post"]
     assert rotate_image_definition["parameters"][0].items() >= {"in": "body", "schema": {"$ref": '#/definitions/Model.Image'}}.items()
     assert rotate_image_definition["responses"][200].items() >= {"schema": {"$ref": '#/definitions/Model.Image'}}.items()
-    assert rotate_image_definition["consumes"] == rotate_image_definition["produces"] == ['application/octet-stream']
+    assert rotate_image_definition["consumes"] == rotate_image_definition["produces"] == [_OCTET_STREAM]
 
-    handle_dict_definition = oas["paths"]["/model/methods/handle_dict"]["post"]
+
+def test_create_oas_dict(model_oas):
+    handle_dict_definition = model_oas["paths"]["/model/methods/handle_dict"]["post"]
     assert handle_dict_definition["parameters"][0].items() >= {"in": "body", "schema": {"$ref": '#/definitions/Model.Dictionary'}}.items()
     assert handle_dict_definition["responses"][200].items() >= {"schema": {"$ref": '#/definitions/Model.Dictionary'}}.items()
-    assert handle_dict_definition["consumes"] == handle_dict_definition["produces"] == ['application/json']
+    assert handle_dict_definition["consumes"] == handle_dict_definition["produces"] == [_JSON]
 
 
-def test_runner(model):
+def test_create_oas_text_to_int(model_oas):
+    handle_dict_definition = model_oas["paths"]["/model/methods/count_words"]["post"]
+    assert handle_dict_definition["parameters"][0].items() >= {"in": "body", "schema": {"$ref": '#/definitions/Model.Text'}}.items()
+    assert handle_dict_definition["responses"][200].items() >= {"schema": {"$ref": '#/definitions/Model.CountWordsOut'}}.items()
+    assert handle_dict_definition["consumes"] == [_TEXT]
+    assert handle_dict_definition["produces"] == [_JSON, _PROTO]
+
+
+def test_create_oas_int_to_text(model_oas):
+    handle_dict_definition = model_oas["paths"]["/model/methods/create_words"]["post"]
+    assert handle_dict_definition["parameters"][0].items() >= {"in": "body", "schema": {"$ref": '#/definitions/Model.CreateWordsIn'}}.items()
+    assert handle_dict_definition["responses"][200].items() >= {"schema": {"$ref": '#/definitions/Model.Text'}}.items()
+    assert handle_dict_definition["consumes"] == [_JSON, _PROTO]
+    assert handle_dict_definition["produces"] == [_TEXT]
+
+
+@pytest.fixture()
+def model_runner(model):
+    runner = None
+    try:
+        with _run_model(model) as runner:
+
+            yield runner
+    except Exception:
+        if runner is not None:
+            output = runner._child.read()
+            print(output.decode("utf-8"))
+        raise
+
+
+@pytest.fixture()
+def runner_api(model_runner):
+    yield model_runner.api
+
+
+def test_runner(runner_api):
     '''Tests model runner basic usage'''
 
-    with _run_model(model) as runner:
-        api = runner.api
+    # =============================================================================
+    # verify artifact APIs
+    # =============================================================================
 
-        # =============================================================================
-        # verify artifact APIs
-        # =============================================================================
+    resp = runner_api.get('/model/artifacts/protobuf')
+    assert 'text/plain' in resp.headers['Content-Type']
 
-        resp = api.get('/model/artifacts/protobuf')
-        assert 'text/plain' in resp.headers['Content-Type']
+    resp = runner_api.get('/model/artifacts/metadata')
+    assert resp.headers['Content-Type'] == _JSON
 
-        resp = api.get('/model/artifacts/metadata')
-        assert resp.headers['Content-Type'] == _JSON
 
-        # =============================================================================
-        # add test
-        # =============================================================================
+def test_runner_add(runner_api):
 
-        add_input = {'x': 1, 'y': 2}
+    # =============================================================================
+    # add test
+    # =============================================================================
 
-        resp_json = api.method('add', json=add_input)
-        assert int(resp_json['value']) == 3
+    add_input = {'x': 1, 'y': 2}
 
-        resp_proto = api.method('add', proto=add_input)
-        assert resp_proto.value == 3
+    resp_json = runner_api.method('add', json=add_input)
+    assert int(resp_json['value']) == 3
 
-        # =============================================================================
-        # count test
-        # =============================================================================
+    resp_proto = runner_api.method('add', proto=add_input)
+    assert resp_proto.value == 3
 
-        count_input = {'strings': ['a'] * 3 + ['b'] * 2 + ['c']}
-        count_output = {'a': 3, 'b': 2, 'c': 1}
 
-        resp_json = api.method('count', json=count_input)
-        assert {k: int(v) for k, v in resp_json['value'].items()} == count_output
+def test_runner_count(runner_api):
 
-        resp_proto = api.method('count', proto=count_input)
-        assert dict(resp_proto.value.items()) == count_output
+    # =============================================================================
+    # count test
+    # =============================================================================
 
-        # =============================================================================
-        # no params test
-        # =============================================================================
+    count_input = {'strings': ['a'] * 3 + ['b'] * 2 + ['c']}
+    count_output = {'a': 3, 'b': 2, 'c': 1}
 
-        empty_input = {}
-        empty_output = 1
+    resp_json = runner_api.method('count', json=count_input)
+    assert {k: int(v) for k, v in resp_json['value'].items()} == count_output
 
-        resp_json = api.method('empty', json=empty_input)
-        assert int(resp_json['value']) == empty_output
+    resp_proto = runner_api.method('count', proto=count_input)
+    assert dict(resp_proto.value.items()) == count_output
 
-        resp_proto = api.method('empty', proto=empty_input)
-        assert resp_proto.value == empty_output
 
-        # =============================================================================
-        # raw test image
-        # =============================================================================
+def test_runner_empty(runner_api):
 
-        with open(os.path.join(os.path.dirname(__file__), "data", "acumos_logo.png"), "rb") as f:
-            raw_image_input = f.read()
-        raw_image_output = raw_image_input
+    # =============================================================================
+    # no params test
+    # =============================================================================
 
-        resp_raw_image = api._post_octet_stream('rotate_image', data=raw_image_input)
-        assert resp_raw_image == raw_image_output
+    empty_input = {}
+    empty_output = 1
 
-        # =============================================================================
-        # raw test dict
-        # =============================================================================
+    resp_json = runner_api.method('empty', json=empty_input)
+    assert int(resp_json['value']) == empty_output
 
-        raw_dict_input = dict(a=1, b=2)
-        raw_dict_output = raw_dict_input
+    resp_proto = runner_api.method('empty', proto=empty_input)
+    assert resp_proto.value == empty_output
 
-        resp_raw_dict = api._post_json('handle_dict', data=raw_dict_input)
-        assert resp_raw_dict == raw_dict_output
 
-        # =============================================================================
-        # headers test
-        # =============================================================================
+def test_runner_image(runner_api):
 
-        try:
-            api.method('add', json=add_input, headers={})
-        except requests.HTTPError as err:
-            assert err.response.status_code == 400
+    # =============================================================================
+    # raw test image
+    # =============================================================================
 
-        try:
-            api.method('add', json=add_input, headers={'Content-Type': _JSON, 'Accept': 'invalid'})
-        except requests.HTTPError as err:
-            assert err.response.status_code == 415
+    with open(os.path.join(os.path.dirname(__file__), "data", "acumos_logo.png"), "rb") as f:
+        raw_image_input = f.read()
+    raw_image_output = raw_image_input
+
+    resp_raw_image = runner_api._post_octet_stream('rotate_image', data=raw_image_input)
+    assert resp_raw_image == raw_image_output
+
+
+def test_runner_dict(runner_api):
+
+    # =============================================================================
+    # raw test dict
+    # =============================================================================
+
+    raw_dict_input = dict(a=1, b=2)
+    raw_dict_output = raw_dict_input
+
+    resp_raw_dict = runner_api._post_json('handle_dict', data=raw_dict_input)
+    assert resp_raw_dict == raw_dict_output
+
+
+def test_runner_count_words(runner_api, model_runner):
+
+    # =============================================================================
+    # raw test count words
+    # =============================================================================
+
+    text_input = " ".join(["abcd"] * 10)
+    value = 10
+
+    resp_raw_json = runner_api._post_text_stream('count_words', data=text_input, accept=_JSON)
+    # protobuf.json_format.MessageToJson converts int to str
+    assert json.loads(resp_raw_json.decode())["value"] == str(value)
+
+
+def test_runner_create_words(runner_api, model_runner):
+
+    # =============================================================================
+    # raw test create words
+    # =============================================================================
+
+    input_data = dict(n=10)
+    text_output = " ".join(["éééé"] * 10)
+
+    raw_text_response = runner_api._post_json('create_words', data=input_data, convert=False, accept=_TEXT)
+    assert raw_text_response.decode() == text_output
+
+
+def test_runner_headers(runner_api):
+
+    # =============================================================================
+    # headers test
+    # =============================================================================
+
+    add_input = {'x': 1, 'y': 2}
+
+    try:
+        runner_api.method('add', json=add_input, headers={})
+    except requests.HTTPError as err:
+        assert err.response.status_code == 400
+
+    try:
+        runner_api.method('add', json=add_input, headers={'Content-Type': _JSON, 'Accept': 'invalid'})
+    except requests.HTTPError as err:
+        assert err.response.status_code == 415
 
 
 def test_cors(model):
