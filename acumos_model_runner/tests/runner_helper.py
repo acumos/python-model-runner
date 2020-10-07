@@ -62,11 +62,14 @@ class Api(object):
         resp_data = self._post(method_name, data, headers)
         return resp_data
 
-    def _post_json(self, method_name, data, headers=None):
+    def _post_json(self, method_name, data, headers=None, *, convert=True, accept=_JSON):
         '''Invokes a model method with json data'''
-        headers = {'Content-Type': _JSON, 'Accept': _JSON} if headers is None else headers
+        headers = {'Content-Type': _JSON, 'Accept': accept} if headers is None else headers
         resp_data = self._post(method_name, json.dumps(data), headers)
-        return json.loads(resp_data.decode())
+        if convert:
+            return json.loads(resp_data.decode())
+        else:
+            return resp_data
 
     def _post_proto(self, method_name, data, headers=None):
         '''Invokes a model method with protobuf data'''

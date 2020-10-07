@@ -52,6 +52,8 @@ def methods(method_name: str):
         except Exception as err:
             abort(Response("Could not invoke method due to runtime error: {}".format(err), 400))
     else:
+        if content_type == _TEXT:
+            data = data.decode("utf-8")
         wrapped_resp = method.from_raw(raw_in=data)
 
     if not output_is_raw:

@@ -53,7 +53,7 @@ setup(
     [console_scripts]
     acumos_model_runner=acumos_model_runner.runner:run_app_cli
     """,
-    install_requires=['acumos>=0.9.4',
+    install_requires=['acumos>=0.9.7',
                       'lark-parser<0.8',
                       'connexion[swagger-ui]~=2.6',
                       'gunicorn',
