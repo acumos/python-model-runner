@@ -21,11 +21,11 @@
 Acumos Python Model Runner Release Notes
 ========================================
 
-v0.2.25, 04 June 2020
+v0.2.5, 04 June 2020
 =====================
 - Fix backward compatibility issue with old models  `ACUMOS-4164 <https://jira.acumos.org/browse/ACUMOS-4164>`_
 
-v0.2.24, 15 May 2020
+v0.2.4, 15 May 2020
 ====================
 - Fix OpenAPI spec generation for empty inputs `ACUMOS-4010 <https://jira.acumos.org/browse/ACUMOS-4010>`_
 - Allow the model runner to use raw data types `ACUMOS-3956 <https://jira.acumos.org/browse/ACUMOS-3956>`_
