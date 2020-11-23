@@ -21,6 +21,10 @@
 Acumos Python Model Runner Release Notes
 ========================================
 
+v0.2.6, 23 Novemver 2020
+========================
+- Fix unicode conversion error when using Text. `ACUMOS-4275 <https://jira.acumos.org/browse/ACUMOS-4275>`_
+
 v0.2.5, 04 June 2020
 ====================
 - Fix backward compatibility issue with old models  `ACUMOS-4164 <https://jira.acumos.org/browse/ACUMOS-4164>`_
